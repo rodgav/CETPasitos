@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <h1>DETALLES ESTUDIANTE</h1>
+</div>
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <h3>CODIGO ESTUDIANTE: {{id}}</h3>
+  </div>
+  <mat-dialog-content>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-sm-6">
+
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="text" size="50" formControlName="nombres" placeholder="Nombre">
+            </label>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="text" size="50" formControlName="apellidos" placeholder="Apellidos">
+            </label>
+
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="text" size="50" formControlName="direccion" placeholder="Direccion">
+            </label>
+
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="number" size="50" formControlName="dni" placeholder="DNI">
+            </label>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput formControlName="fechan" size="50" placeholder="F. Nacimiento">
+            </label>
+          </mat-form-field>
+
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <label>
+              <input type="text" size="50" placeholder="Lugar Nacimiento: Departamento-Provincia-Distrito" matInput
+                     formControlName="lugnac">
+            </label>
+          </mat-form-field>
+
+          <mat-form-field>
+            <label>
+              <input matInput formControlName="establecimiento" size="50" placeholder="Establecimiento">
+            </label>
+          </mat-form-field>
+
+          <mat-form-field>
+            <label>
+              <input matInput formControlName="religion" size="50" placeholder="Religion">
+            </label>
+          </mat-form-field>
+
+          <mat-form-field>
+            <label>
+              <input matInput formControlName="estado" size="50" placeholder="Estado">
+            </label>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <div class="d-flex justify-content-center">
+    <button class="text-white" mat-button color="primary" (click)="Cerrar()">Aceptar</button>
+  </div>
+</div>
