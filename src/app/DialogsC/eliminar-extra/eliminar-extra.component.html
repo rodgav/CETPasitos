@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-center">
+  <h2>ELIMINAR {{extra}}</h2>
+</div>
+<div class="container-fluid">
+  <div class="container">
+    <h6>ESTUDIANTE: {{estudiante}}</h6>
+    <h6>NOMBRE: {{nombre}}</h6>
+    <h6>FECHA: {{fecha}}</h6>
+    <h6>¿Seguro que quiere eliminar?</h6>
+    <mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+    <div class="d-flex justify-content-center">
+      <button mat-raised-button color="primary" class="text-white" (click)="Eliminar()">ACEPTAR</button>
+      <mat-divider style=" margin: 10px;" [vertical]="true"></mat-divider>
+      <button mat-raised-button color="primary" class="text-white" (click)="Cerrar()">CANCELAR</button>
+    </div>
+  </div>
+</div>

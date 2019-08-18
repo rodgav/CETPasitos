@@ -3,9 +3,9 @@ import {MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource} f
 import {Estudiantes} from '../../Data/Estudiantes';
 import {ConexionService} from '../../Servicios/conexion.service';
 import {Usuario} from '../../Data/Usuario';
-import {AddUsuarioComponent} from '../DialogsC/add-usuario/add-usuario.component';
-import {AsignarEstudianteComponent} from '../DialogsC/asignar-estudiante/asignar-estudiante.component';
-import {EliminarComponent} from '../DialogsC/eliminar/eliminar.component';
+import {AddUsuarioComponent} from '../../DialogsC/add-usuario/add-usuario.component';
+import {AsignarEstudianteComponent} from '../../DialogsC/asignar-estudiante/asignar-estudiante.component';
+import {EliminarComponent} from '../../DialogsC/eliminar/eliminar.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -21,7 +21,8 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     , 'actualizar', 'eliminar'];
   keydata = 'usuarios';
   keymens = 'mensaje';
-
+  keyerro = 'error';
+  visible: boolean;
   constructor(private conexion: ConexionService,
               private dialog: MatDialog) {
   }
@@ -47,6 +48,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       usuarios => {
         // alert(usuarios[this.keymens]);
         Object.keys(usuarios).map(() => {
+          this.visible = usuarios[this.keyerro] === false;
           this.usuarios = usuarios[this.keydata];
           this.dataSource.data = usuarios[this.keydata] as Usuario[];
         });

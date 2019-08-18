@@ -2,11 +2,11 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Estudiantes} from '../../Data/Estudiantes';
 import {ConexionService} from '../../Servicios/conexion.service';
-import {DetallesEstudianteComponent} from '../DialogsC/detalles-estudiante/detalles-estudiante.component';
-import {DetallesPadreComponent} from '../DialogsC/detalles-padre/detalles-padre.component';
+import {DetallesEstudianteComponent} from '../../DialogsC/detalles-estudiante/detalles-estudiante.component';
+import {DetallesPadreComponent} from '../../DialogsC/detalles-padre/detalles-padre.component';
 import {Padres} from '../../Data/Padres';
-import {EditFamiliComponent} from '../DialogsC/edit-famili/edit-famili.component';
-import {EditPadreComponent} from '../DialogsC/edit-padre/edit-padre.component';
+import {EditFamiliComponent} from '../../DialogsC/edit-famili/edit-famili.component';
+import {EditPadreComponent} from '../../DialogsC/edit-padre/edit-padre.component';
 
 @Component({
   selector: 'app-padres',
@@ -22,6 +22,8 @@ export class PadresComponent implements OnInit, AfterViewInit {
     'centro', 'familiar', 'hijo', 'detalles', 'editar'];
   keydata = 'padres';
   keymens = 'mensaje';
+  keyerro = 'error';
+  visible: boolean;
 
   constructor(private conexion: ConexionService,
               private dialog: MatDialog) {
@@ -48,6 +50,7 @@ export class PadresComponent implements OnInit, AfterViewInit {
       padres => {
         // alert(padres[this.keymens]);
         Object.keys(padres).map(() => {
+          this.visible = padres[this.keyerro] === false;
           this.estudiantes = padres[this.keydata];
           this.dataSource.data = padres[this.keydata] as Padres[];
         });

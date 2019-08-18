@@ -1,4 +1,4 @@
-<div fxLayout fxLayoutAlign="center center">
+<div fxLayout fxLayoutAlign="center center" *ngIf="visible">
   <mat-form-field fxFlex="40%">
     <label>
       <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
@@ -6,48 +6,63 @@
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8 padres-table">
+<div class="mat-elevation-z8 padres-table" *ngIf="visible">
 
   <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
 
     <ng-container matColumnDef="dni">
       <mat-header-cell *matHeaderCellDef mat-sort-header>DNI</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.dni}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">DNI</span>
+        {{row.dni}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="apellidos">
       <mat-header-cell *matHeaderCellDef mat-sort-header>APELLIDOS</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.apellidos}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">APELLIDOS</span>
+        {{row.apellidos}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="nombres">
       <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRES</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.nombres}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">NOMBRES</span>
+        {{row.nombres}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="celular">
       <mat-header-cell *matHeaderCellDef mat-sort-header>CELULAR</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.celular}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">CELULAR</span>
+        {{row.celular}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="centro">
       <mat-header-cell *matHeaderCellDef mat-sort-header>CENTRO TRABAJO</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.centrtraba}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">CENTRO TRABAJO</span>
+        {{row.centrtraba}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="familiar">
       <mat-header-cell *matHeaderCellDef mat-sort-header>TIPO</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.familiar}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">TIPO</span>
+        {{row.familiar}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="hijo">
       <mat-header-cell *matHeaderCellDef mat-sort-header>HIJO</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.hijo}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">HIJO</span>
+        {{row.hijo}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="detalles">
       <mat-header-cell *matHeaderCellDef mat-sort-header>DETALLES</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">DETALLES</span>
         <button mat-icon-button color="primary" (click)="Detalles(row.dni)">
           <i class="fa fa-info-circle"></i>
         </button>
@@ -57,6 +72,7 @@
     <ng-container matColumnDef="editar">
       <mat-header-cell *matHeaderCellDef mat-sort-header>EDITAR</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">EDITAR</span>
         <button mat-icon-button color="primary" (click)="Editar(row.dni)">
           <i class="fa fa-edit"></i>
         </button>

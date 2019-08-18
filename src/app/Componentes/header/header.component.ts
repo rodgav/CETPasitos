@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
     this.usuarioservicio.logout();
     this.Cambiar();
     this.router.navigate(['login']);
+    location.reload();
   }
 
 }

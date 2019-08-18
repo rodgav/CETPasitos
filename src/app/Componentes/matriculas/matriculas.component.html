@@ -9,7 +9,7 @@
   <mat-divider [inset]="true"></mat-divider>
 </div>
 
-<div fxLayout fxLayoutAlign="center center">
+<div fxLayout fxLayoutAlign="center center" *ngIf="visible">
   <mat-form-field fxFlex="40%">
     <label>
       <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
@@ -17,48 +17,70 @@
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8 estudiantes-table">
+<div class="mat-elevation-z8 estudiantes-table" *ngIf="visible">
 
   <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
 
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ID</span>
+        {{row.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>USUARIO</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">USUARIO</span>
+        {{row.usuario}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="fechains">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Insc.</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.fechains}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA INSC.</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">FECHA INSC.</span>
+        {{row.fechains}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="fechaini">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Inic.</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.fechaini}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA INIC</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">FECHA INIC.</span>
+        {{row.fechaini}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="turno">
       <mat-header-cell *matHeaderCellDef mat-sort-header>TURNO</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.turno}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">TURNO</span>
+        {{row.turno}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="estudiante">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ESTUDIANTE</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.estudiante}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ESTUDIANTE</span>
+        {{row.estudiante}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="anio">
       <mat-header-cell *matHeaderCellDef mat-sort-header>AÑO</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.anio}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">AÑO</span>
+        {{row.anio}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="boleta">
       <mat-header-cell *matHeaderCellDef mat-sort-header>N° BOLETA</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.boleta}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">N° BOLETA</span>
+        {{row.boleta}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="pdf">
       <mat-header-cell *matHeaderCellDef mat-sort-header>PDF</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">PDF</span>
         <button mat-icon-button color="warn" (click)="PDF(row.id)">
           <i class="fa fa-file-pdf-o "></i>
         </button>

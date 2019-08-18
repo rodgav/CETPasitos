@@ -9,7 +9,7 @@
   <mat-divider [inset]="true"></mat-divider>
 </div>
 
-<div fxLayout fxLayoutAlign="center center">
+<div fxLayout fxLayoutAlign="center center" *ngIf="visible">
   <mat-form-field fxFlex="40%">
     <label>
       <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
@@ -17,58 +17,79 @@
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8 estudiantes-table">
+<div class="mat-elevation-z8 estudiantes-table" *ngIf="visible">
 
   <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
 
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ID</span>
+        {{row.id}}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="apellidos">
       <mat-header-cell *matHeaderCellDef mat-sort-header>APELLIDOS</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.apellidos}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">APELLIDOS</span>
+        {{row.apellidos}}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="nombres">
       <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRES</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.nombres}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">NOMBRES</span>
+        {{row.nombres}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dni">
       <mat-header-cell *matHeaderCellDef mat-sort-header>DNI</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.dni}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">DNI</span>
+        {{row.dni}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="fechan">
       <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA N.</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.fechan}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">FECHA N.</span>
+        {{row.fechan}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="edad">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Edad</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.edad}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>EDAD</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">EDAD</span>
+        {{row.edad}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="establecimiento">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ATENCION</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.estable}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ATENCION</span>
+        {{row.estable}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="religion">
       <mat-header-cell *matHeaderCellDef mat-sort-header>RELIGION</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.religion}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">RELIGION</span>
+        {{row.religion}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="estado">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ESTADO</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.estado}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ESTADO</span>
+        {{row.estado}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="detalles">
       <mat-header-cell *matHeaderCellDef mat-sort-header>DETALLES</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">DETALLES</span>
         <button mat-icon-button color="primary" (click)="Detalles(row.id)">
           <i class="fa fa-info-circle"></i>
         </button>
@@ -78,6 +99,7 @@
     <ng-container matColumnDef="activo">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ACTIVO</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ACTIVO</span>
         <button mat-icon-button color="primary" (click)="CambiarEstado(row.id)">
           <i class="fa fa-edit"></i>
         </button>
@@ -87,6 +109,7 @@
     <ng-container matColumnDef="asignar">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ASIGNAR</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ASIGNAR</span>
         <button mat-icon-button color="primary" (click)="Asignar(row.dni)">
           <i class="fa fa-plus-square"></i>
         </button>
@@ -96,6 +119,7 @@
     <ng-container matColumnDef="editar">
       <mat-header-cell *matHeaderCellDef mat-sort-header>EDITAR</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">EDITAR</span>
         <button mat-icon-button color="primary" (click)="Editar(row.id)">
           <i class="fa fa-edit"></i>
         </button>

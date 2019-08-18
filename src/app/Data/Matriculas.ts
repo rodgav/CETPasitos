@@ -1,5 +1,6 @@
 export class Matriculas {
   public id: number;
+  public usuario: string;
   public fechains: string;
   public fechaini: string;
   public turno: string;

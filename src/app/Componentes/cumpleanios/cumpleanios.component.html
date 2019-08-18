@@ -1,32 +1,40 @@
-<div fxLayout fxLayoutAlign="center center">
+<div fxLayout fxLayoutAlign="center center" *ngIf="visible">
   <mat-form-field fxFlex="40%">
     <label>
       <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
     </label>
   </mat-form-field>
 </div>
-<div class="mat-elevation-z8 cumpleanios">
+<div class="mat-elevation-z8 cumpleanios" *ngIf="visible">
 
   <mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="Apellidos">
       <mat-header-cell *matHeaderCellDef>Apellidos</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.apellidos}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">APELLIDOS</span>
+        {{row.apellidos}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="Nombres">
       <mat-header-cell *matHeaderCellDef>Nombres</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.nombres}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">NOMBRES</span>
+        {{row.nombres}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="Fecha Nac.">
-      <mat-header-cell *matHeaderCellDef>Fecha Nac.</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.fechan}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef>FECHA NAC.</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">FECHA NAC.</span>
+        {{row.fechan}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="Edad">
-      <mat-header-cell *matHeaderCellDef>Edad</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.edad}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef>EDAD</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">EDAD</span>
+        {{row.edad}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>

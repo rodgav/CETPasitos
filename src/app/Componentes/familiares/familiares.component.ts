@@ -2,8 +2,8 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Estudiantes} from '../../Data/Estudiantes';
 import {ConexionService} from '../../Servicios/conexion.service';
-import {AddEstudianteComponent} from '../DialogsC/add-estudiante/add-estudiante.component';
-import {EditFamiliComponent} from '../DialogsC/edit-famili/edit-famili.component';
+import {AddEstudianteComponent} from '../../DialogsC/add-estudiante/add-estudiante.component';
+import {EditFamiliComponent} from '../../DialogsC/edit-famili/edit-famili.component';
 import {Familiares} from '../../Data/Familiares';
 
 @Component({
@@ -20,6 +20,8 @@ export class FamiliaresComponent implements OnInit, AfterViewInit {
     , 'familiar', 'hijo', 'editar'];
   keydata = 'familiares';
   keymens = 'mensaje';
+  keyerro = 'error';
+  visible: boolean;
 
   constructor(private conexion: ConexionService,
               private dialog: MatDialog) {
@@ -46,6 +48,7 @@ export class FamiliaresComponent implements OnInit, AfterViewInit {
       familiares => {
         // alert(familiares[this.keymens]);
         Object.keys(familiares).map(() => {
+          this.visible = familiares[this.keyerro] === false;
           this.familiares = familiares[this.keydata];
           this.dataSource.data = familiares[this.keydata] as Familiares[];
         });

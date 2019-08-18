@@ -9,7 +9,7 @@
   <mat-divider [inset]="true"></mat-divider>
 </div>
 
-<div fxLayout fxLayoutAlign="center center">
+<div fxLayout fxLayoutAlign="center center" *ngIf="visible">
   <mat-form-field fxFlex="40%">
     <label>
       <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
@@ -17,28 +17,35 @@
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8 familiares-table">
+<div class="mat-elevation-z8 familiares-table" *ngIf="visible">
 
   <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
 
     <ng-container matColumnDef="dni">
       <mat-header-cell *matHeaderCellDef mat-sort-header>DNI</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">DNI</span>
+        {{row.id}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="nombres">
       <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRES</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">NOMBRES</span>
+        {{row.nombre}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="tipo">
       <mat-header-cell *matHeaderCellDef mat-sort-header>TIPO</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.tipo}}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">TIPO</span>
+        {{row.tipo}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actualizar">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ACTUALIZAR</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ACTUALIZAR</span>
         <button mat-icon-button color="primary" (click)="Modificar(row.id,row.nombre)">
           <i class="fa fa-edit"></i>
         </button>
@@ -48,6 +55,7 @@
     <ng-container matColumnDef="eliminar">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ELIMINAR</mat-header-cell>
       <mat-cell *matCellDef="let row">
+        <span class="mobile-label">ELIMINAR</span>
         <button mat-icon-button color="warn" (click)="Eliminar(row.id)">
           <i class="fa fa-trash"></i>
         </button>

@@ -13,7 +13,8 @@ import {Usuario} from '../../Data/Usuario';
 export class LoginComponent implements OnInit {
   @ViewChild('usuariol', {static: false}) usuariol: ElementRef;
 
-  constructor(private fb: FormBuilder, private conexionService: ConexionService,
+  constructor(private fb: FormBuilder,
+              private conexionService: ConexionService,
               private usuarioservicio: UsuarioService,
               private router: Router) {
   }

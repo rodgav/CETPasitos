@@ -2,12 +2,12 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Estudiantes} from '../../Data/Estudiantes';
 import {ConexionService} from '../../Servicios/conexion.service';
-import {DetallesEstudianteComponent} from '../DialogsC/detalles-estudiante/detalles-estudiante.component';
-import {ActuaEstadEstudiComponent} from '../DialogsC/actua-estad-estudi/actua-estad-estudi.component';
-import {AsignarEstudianteComponent} from '../DialogsC/asignar-estudiante/asignar-estudiante.component';
-import {AddEstudianteComponent} from '../DialogsC/add-estudiante/add-estudiante.component';
-import {AddPadreComponent} from '../DialogsC/add-padre/add-padre.component';
-import {AddFamiliarComponent} from '../DialogsC/add-familiar/add-familiar.component';
+import {DetallesEstudianteComponent} from '../../DialogsC/detalles-estudiante/detalles-estudiante.component';
+import {ActuaEstadEstudiComponent} from '../../DialogsC/actua-estad-estudi/actua-estad-estudi.component';
+import {AsignarEstudianteComponent} from '../../DialogsC/asignar-estudiante/asignar-estudiante.component';
+import {AddEstudianteComponent} from '../../DialogsC/add-estudiante/add-estudiante.component';
+import {AddPadreComponent} from '../../DialogsC/add-padre/add-padre.component';
+import {AddFamiliarComponent} from '../../DialogsC/add-familiar/add-familiar.component';
 
 @Component({
   selector: 'app-estudiantes',
@@ -23,6 +23,8 @@ export class EstudiantesComponent implements OnInit, AfterViewInit {
     'establecimiento', 'religion', 'estado', 'detalles', 'activo', 'asignar', 'editar'];
   keydata = 'estudiantes';
   keymens = 'mensaje';
+  keyerro = 'error';
+  visible: boolean;
 
   constructor(private conexion: ConexionService,
               private dialog: MatDialog) {
@@ -47,6 +49,7 @@ export class EstudiantesComponent implements OnInit, AfterViewInit {
     this.estudiantes = null;
     this.conexion.servicio(formData).subscribe(
       estudiantes => {
+        this.visible = estudiantes[this.keyerro] === false;
         // alert(estudiantes[this.keymens]);
         Object.keys(estudiantes).map(() => {
           this.estudiantes = estudiantes[this.keydata];
@@ -111,7 +114,7 @@ export class EstudiantesComponent implements OnInit, AfterViewInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {dni};
-    // dialogConfig.width = '800px';
+    dialogConfig.width = '800px';
     // dialogConfig.height = '600px';
     dialogConfig.hasBackdrop = true;
     const dialogRef = this.dialog.open(AsignarEstudianteComponent, dialogConfig);

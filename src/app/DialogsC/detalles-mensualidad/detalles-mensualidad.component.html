@@ -1,0 +1,303 @@
+<mat-dialog-content>
+  <div class="container">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="number" formControlName="codigo" placeholder="Codigo Estudiante"
+                     (keyup)="Controlar($event.target.value)">
+            </label>
+            <mat-error *ngIf="isFieldInvalid('codigo')">
+              Ingrese el codigo del estudiante
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="text" formControlName="nombres" placeholder="Nombres">
+            </label>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="text" formControlName="codmatri" placeholder="COD. MATRICULA">
+            </label>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="d-flex justify-content-center">
+    <h5>DETALLES MENSUALIDAD</h5>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          TURNOS EXTRA
+        </mat-panel-title>
+        <mat-panel-description>
+          {{totalturnoextra}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-elevation-z8 turnosextra-table">
+        <mat-table [dataSource]="dataSourcet" matSort matSortStart="desc">
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">FECHA</span>
+              {{row.fecha}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">NOMBRE</span>
+              {{row.turno}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">TOTAL</span>
+              {{row.total}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnast"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnast;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+        </mat-paginator>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          HORAS EXTRA
+        </mat-panel-title>
+        <mat-panel-description>
+          {{totalhoraextra}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-elevation-z8 turnosextra-table">
+
+        <mat-table [dataSource]="dataSourceh" matSort matSortStart="desc">
+
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">FECHA</span>
+              {{row.fecha}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">NOMBRE</span>
+              {{row.turno}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">TOTAL</span>
+              {{row.total}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnash"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnash;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+        </mat-paginator>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          ALIMENTOS EXTRA
+        </mat-panel-title>
+        <mat-panel-description>
+          {{totalalimentosextra}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-elevation-z8 turnosextra-table">
+
+        <mat-table [dataSource]="dataSourcea" matSort matSortStart="desc">
+
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">FECHA</span>
+              {{row.fecha}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">NOMBRE</span>
+              {{row.nombre}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">TOTAL</span>
+              {{row.total}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnasa"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnasa;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+        </mat-paginator>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          MENSUALIDAD ALIMENTOS
+        </mat-panel-title>
+        <mat-panel-description>
+          {{totalmensualidada}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-elevation-z8 turnosextra-table">
+
+        <mat-table [dataSource]="dataSourcema" matSort matSortStart="desc">
+
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">FECHA</span>
+              {{row.fecha}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">NOMBRE</span>
+              {{row.nombre}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">TOTAL</span>
+              {{row.total}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnasma"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnasma;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+        </mat-paginator>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          MENSUALIDAD REFRIGERIO
+        </mat-panel-title>
+        <mat-panel-description>
+          {{totalmensualidadr}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-elevation-z8 turnosextra-table">
+
+        <mat-table [dataSource]="dataSourcemr" matSort matSortStart="desc">
+
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">FECHA</span>
+              {{row.fecha}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">NOMBRE</span>
+              {{row.nombre}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">TOTAL</span>
+              {{row.total}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnasmr"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnasmr;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+        </mat-paginator>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          MENSUALIDAD
+        </mat-panel-title>
+        <mat-panel-description>
+          {{totalmensualidad}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-elevation-z8 turnosextra-table">
+
+        <mat-table [dataSource]="dataSourcem" matSort matSortStart="desc">
+
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>FECHA</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">FECHA</span>
+              {{row.fecha}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">NOMBRE</span>
+              {{row.nombre}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="mobile-label">TOTAL</span>
+              {{row.total}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnasm"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnasm;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+        </mat-paginator>
+      </div>
+    </mat-expansion-panel>
+    <form [formGroup]="form1">
+      <mat-form-field class="example-full-width">
+        <label>
+          <input matInput type="number" formControlName="descuento" placeholder="Descuento"
+                 (keyup)="Descontar($event.target.value)">
+        </label>
+        <mat-error *ngIf="isFieldInvalid1('descuento')">
+          Ingrese el valor a descontar
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div>
+      <span fxFlex></span>
+      <h3>{{total}}</h3>
+    </div>
+  </mat-accordion>
+  <br>
+</mat-dialog-content>
+<div mat-dialog-actions class="d-flex justify-content-center">
+  <button class="text-white" mat-button color="primary" type="button" (click)="Cerrar()">Cancelar</button>
+  <mat-divider style="margin: 10px;" [vertical]="true"></mat-divider>
+  <button class="text-white" mat-button color="primary" type="submit" *ngIf="visible" [disabled]="habilitarpagar" (click)="Pagar()">Pagar</button>
+</div>

@@ -4,37 +4,98 @@
        alt="pasitos">
 </div>
 <mat-toolbar [fxShow]="true" color="primary" *ngIf="logeado">
-  <button mat-button [matMenuTriggerFor]="admiperso">ADM. PERSONAL</button>
-  <mat-menu #admiperso="matMenu">
-    <button mat-menu-item [routerLink]="['/padres']">PADRES</button>
-    <button mat-menu-item [routerLink]="['/familiares']">FAMILIARES</button>
-    <button mat-menu-item [routerLink]="['/estudiantes']">ESTUDIANTES</button>
-    <button mat-menu-item [routerLink]="['/usuarios']">USUARIOS</button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="admpagos">ADM. PAGOS</button>
-  <mat-menu #admpagos="matMenu">
-    <button mat-menu-item [routerLink]="['/matriculas']">MATRICULA</button>
-    <button mat-menu-item [routerLink]="['/mensualidades']">MENSUALIDADES</button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="admserv">ADM. SERVICIOS</button>
-  <mat-menu #admserv="matMenu">
-    <button mat-menu-item [routerLink]="['/asistencia']">ASISTENCIA</button>
-    <button mat-menu-item [routerLink]="['/alimentos']">ALIMENTOS</button>
-    <button mat-menu-item [routerLink]="['/turnoextra']">TURNOS EXTRA</button>
-    <button mat-menu-item [routerLink]="['/alimentoextra']">ALIMENTOS EXTRA</button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="admcost">ADM. COSTOS</button>
-  <mat-menu #admcost="matMenu">
-    <button mat-menu-item [routerLink]="['/costoturn']">COSTOS TURNOS</button>
-    <button mat-menu-item [routerLink]="['/costoalim']">COSTOS ALIMENTOS</button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="report">REPORTES</button>
-  <mat-menu #report="matMenu">
-    <button mat-menu-item [routerLink]="['/cumpleanios','estudiantes']">CUMPLEAÑOS ESTUDIANTES</button>
-    <button mat-menu-item [routerLink]="['/cumpleanios','padres']">CUMPLEAÑOS PADRES</button>
-    <button mat-menu-item [routerLink]="['/deudopagado','morosos']">MOROSOS</button>
-    <button mat-menu-item [routerLink]="['/deudopagado','pagados']">PAGADOS</button>
-  </mat-menu>
-  <span fxFlex></span>
-  <button mat-button (click)="Salir()" *ngIf="logeado">Salir</button>
+  <mat-toolbar-row>
+    <div fxShow="true" fxHide.lt-md="true">
+      <button mat-button [matMenuTriggerFor]="admiperso">ADM. PERSONAL</button>
+      <mat-menu #admiperso="matMenu">
+        <button mat-menu-item [routerLink]="['/padres']">PADRES</button>
+        <button mat-menu-item [routerLink]="['/familiares']">FAMILIARES</button>
+        <button mat-menu-item [routerLink]="['/estudiantes']">ESTUDIANTES</button>
+        <button mat-menu-item [routerLink]="['/usuarios']">USUARIOS</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="admpagos">ADM. PAGOS</button>
+      <mat-menu #admpagos="matMenu">
+        <button mat-menu-item [routerLink]="['/matriculas']">MATRICULA</button>
+        <button mat-menu-item [routerLink]="['/mensualidades']">MENSUALIDADES</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="admserv">ADM. SERVICIOS</button>
+      <mat-menu #admserv="matMenu">
+        <button mat-menu-item [routerLink]="['/asistencia']">ASISTENCIA</button>
+        <button mat-menu-item [routerLink]="['/alimentos']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/turnoextra']">TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/horaextra']">HORAS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/alimentoextra']">ALIMENTOS EXTRA</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="admcost">ADM. COSTOS</button>
+      <mat-menu #admcost="matMenu">
+        <button mat-menu-item [routerLink]="['/costoturn']">COSTOS TURNOS</button>
+        <button mat-menu-item [routerLink]="['/costoalim']">COSTOS ALIMENTOS</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="report">REPORTES</button>
+      <mat-menu #report="matMenu">
+        <button mat-menu-item [routerLink]="['/cumpleanios','estudiantes']">CUMPLEAÑOS ESTUDIANTES</button>
+        <button mat-menu-item [routerLink]="['/cumpleanios','padres']">CUMPLEAÑOS PADRES</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','morosos']">MOROSOS</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','pagados']">PAGADOS</button>
+        <button mat-menu-item [routerLink]="['/Rasistencia']">ASISTENCIA</button>
+        <button mat-menu-item [routerLink]="['/Ralimentos']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/Rturnoextra']">TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/Ralimentoextra']">ALIMENTOS EXTRA</button>
+      </mat-menu>
+      <button mat-button (click)="Salir()" *ngIf="logeado">SALIR</button>
+    </div>
+    <div fxShow="true" fxHide.gt-sm="true">
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+        <a>MENU</a>
+      </button>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav fxLayout="column">
+    <div fxLayout="column">
+      <button mat-button [matMenuTriggerFor]="admiperso">ADM. PERSONAL</button>
+      <mat-menu #admiperso="matMenu">
+        <button mat-menu-item [routerLink]="['/padres']">PADRES</button>
+        <button mat-menu-item [routerLink]="['/familiares']">FAMILIARES</button>
+        <button mat-menu-item [routerLink]="['/estudiantes']">ESTUDIANTES</button>
+        <button mat-menu-item [routerLink]="['/usuarios']">USUARIOS</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="admpagos">ADM. PAGOS</button>
+      <mat-menu #admpagos="matMenu">
+        <button mat-menu-item [routerLink]="['/matriculas']">MATRICULA</button>
+        <button mat-menu-item [routerLink]="['/mensualidades']">MENSUALIDADES</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="admserv">ADM. SERVICIOS</button>
+      <mat-menu #admserv="matMenu">
+        <button mat-menu-item [routerLink]="['/asistencia']">ASISTENCIA</button>
+        <button mat-menu-item [routerLink]="['/alimentos']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/turnoextra']">TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/horaextra']">HORAS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/alimentoextra']">ALIMENTOS EXTRA</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="admcost">ADM. COSTOS</button>
+      <mat-menu #admcost="matMenu">
+        <button mat-menu-item [routerLink]="['/costoturn']">COSTOS TURNOS</button>
+        <button mat-menu-item [routerLink]="['/costoalim']">COSTOS ALIMENTOS</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="report">REPORTES</button>
+      <mat-menu #report="matMenu">
+        <button mat-menu-item [routerLink]="['/cumpleanios','estudiantes']">CUMPLEAÑOS ESTUDIANTES</button>
+        <button mat-menu-item [routerLink]="['/cumpleanios','padres']">CUMPLEAÑOS PADRES</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','morosos']">MOROSOS</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','pagados']">PAGADOS</button>
+        <button mat-menu-item [routerLink]="['/Rasistencia']">ASISTENCIA</button>
+        <button mat-menu-item [routerLink]="['/Ralimentos']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/Rturnoextra']">TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/Ralimentoextra']">ALIMENTOS EXTRA</button>
+      </mat-menu>
+      <span fxFlex></span>
+      <button mat-button (click)="Salir()" *ngIf="logeado">Salir</button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

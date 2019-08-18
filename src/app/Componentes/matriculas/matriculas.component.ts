@@ -3,8 +3,8 @@ import {MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource} f
 import {Familiares} from '../../Data/Familiares';
 import {Matriculas} from '../../Data/Matriculas';
 import {ConexionService} from '../../Servicios/conexion.service';
-import {AddEstudianteComponent} from '../DialogsC/add-estudiante/add-estudiante.component';
-import {AddMatriculaComponent} from '../DialogsC/add-matricula/add-matricula.component';
+import {AddEstudianteComponent} from '../../DialogsC/add-estudiante/add-estudiante.component';
+import {AddMatriculaComponent} from '../../DialogsC/add-matricula/add-matricula.component';
 
 @Component({
   selector: 'app-matriculas',
@@ -15,10 +15,11 @@ export class MatriculasComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   dataSource = new MatTableDataSource<Matriculas>();
-  matriculas: Matriculas[];
   keydata = 'matriculas';
-  columnas = ['id', 'fechains', 'fechaini', 'turno'
+  columnas = ['id', 'usuario', 'fechains', 'fechaini', 'turno'
     , 'estudiante', 'anio', 'boleta', 'pdf'];
+  visible: boolean;
+  keyerro = 'error';
 
   constructor(private conexion: ConexionService, private dialog: MatDialog) {
   }
@@ -39,12 +40,11 @@ export class MatriculasComponent implements OnInit, AfterViewInit {
   private LlenarMatriculas() {
     const formData = new FormData();
     formData.append('accion', this.keydata);
-    this.matriculas = null;
     this.conexion.servicio(formData).subscribe(
       matriculas => {
         // alert(familiares[this.keymens]);
         Object.keys(matriculas).map(() => {
-          this.matriculas = matriculas[this.keydata];
+          this.visible = matriculas[this.keyerro] === false;
           this.dataSource.data = matriculas[this.keydata] as Matriculas[];
         });
       }

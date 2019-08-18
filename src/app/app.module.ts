@@ -11,11 +11,22 @@ import {RouterModule} from '@angular/router';
 import {
   MatAutocompleteModule,
   MatButtonModule,
-  MatCardModule, MatDatepickerModule, MatDialogModule,
+  MatCardModule,
+  MatDatepickerModule,
+  MatDialogModule,
   MatDividerModule,
+  MatExpansionModule,
   MatFormFieldModule,
-  MatInputModule,
-  MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule, MatSortModule, MatTableModule,
+  MatIconModule,
+  MatInputModule, MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSortModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -35,22 +46,30 @@ import {TurnoextraComponent} from './Componentes/turnoextra/turnoextra.component
 import {AlimentosextraComponent} from './Componentes/alimentosextra/alimentosextra.component';
 import {DeudopagadoComponent} from './Componentes/deudopagado/deudopagado.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import {DetallesPadreComponent} from './Componentes/DialogsC/detalles-padre/detalles-padre.component';
-import {DetallesEstudianteComponent} from './Componentes/DialogsC/detalles-estudiante/detalles-estudiante.component';
-import {ActuaEstadEstudiComponent} from './Componentes/DialogsC/actua-estad-estudi/actua-estad-estudi.component';
-import {AddUsuarioComponent} from './Componentes/DialogsC/add-usuario/add-usuario.component';
-import {AsignarEstudianteComponent} from './Componentes/DialogsC/asignar-estudiante/asignar-estudiante.component';
-import {AddEstudianteComponent} from './Componentes/DialogsC/add-estudiante/add-estudiante.component';
-import {EliminarComponent} from './Componentes/DialogsC/eliminar/eliminar.component';
-import {AddPadreComponent} from './Componentes/DialogsC/add-padre/add-padre.component';
-import {AddFamiliarComponent} from './Componentes/DialogsC/add-familiar/add-familiar.component';
+import {DetallesPadreComponent} from './DialogsC/detalles-padre/detalles-padre.component';
+import {DetallesEstudianteComponent} from './DialogsC/detalles-estudiante/detalles-estudiante.component';
+import {ActuaEstadEstudiComponent} from './DialogsC/actua-estad-estudi/actua-estad-estudi.component';
+import {AddUsuarioComponent} from './DialogsC/add-usuario/add-usuario.component';
+import {AsignarEstudianteComponent} from './DialogsC/asignar-estudiante/asignar-estudiante.component';
+import {AddEstudianteComponent} from './DialogsC/add-estudiante/add-estudiante.component';
+import {EliminarComponent} from './DialogsC/eliminar/eliminar.component';
+import {AddPadreComponent} from './DialogsC/add-padre/add-padre.component';
+import {AddFamiliarComponent} from './DialogsC/add-familiar/add-familiar.component';
 import {NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
-import {EditPadreComponent} from './Componentes/DialogsC/edit-padre/edit-padre.component';
-import {EditFamiliComponent} from './Componentes/DialogsC/edit-famili/edit-famili.component';
-import {CargandoComponent} from './Componentes/DialogsC/cargando/cargando.component';
+import {EditPadreComponent} from './DialogsC/edit-padre/edit-padre.component';
+import {EditFamiliComponent} from './DialogsC/edit-famili/edit-famili.component';
+import {CargandoComponent} from './DialogsC/cargando/cargando.component';
 import {CargaService} from './Servicios/carga.service';
 import {LoaderInterceptor} from './Interceptor/Carga.Interceptor';
-import {AddMatriculaComponent} from './Componentes/DialogsC/add-matricula/add-matricula.component';
+import {AddMatriculaComponent} from './DialogsC/add-matricula/add-matricula.component';
+import {DetallesMensualidadComponent} from './DialogsC/detalles-mensualidad/detalles-mensualidad.component';
+import {CanActiveGuardServiceService} from './Servicios/can-active-guard-service.service';
+import {AsignarTurnoComponent} from './DialogsC/asignar-turno/asignar-turno.component';
+import {AsignarAlimentosComponent} from './DialogsC/asignar-alimentos/asignar-alimentos.component';
+import {AddHoraTurnoExtraComponent} from './DialogsC/add-hora-turno-extra/add-hora-turno-extra.component';
+import {AddAlimentoExtraComponent} from './DialogsC/add-alimento-extra/add-alimento-extra.component';
+import {EliminarExtraComponent} from './DialogsC/eliminar-extra/eliminar-extra.component';
+import {HorasExtraComponent} from './Componentes/horas-extra/horas-extra.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +103,14 @@ import {AddMatriculaComponent} from './Componentes/DialogsC/add-matricula/add-ma
     EditPadreComponent,
     EditFamiliComponent,
     CargandoComponent,
-    AddMatriculaComponent
+    AddMatriculaComponent,
+    DetallesMensualidadComponent,
+    AsignarTurnoComponent,
+    AsignarAlimentosComponent,
+    AddHoraTurnoExtraComponent,
+    AddAlimentoExtraComponent,
+    EliminarExtraComponent,
+    HorasExtraComponent
   ],
   imports: [
     BrowserModule,
@@ -92,20 +118,21 @@ import {AddMatriculaComponent} from './Componentes/DialogsC/add-matricula/add-ma
     HttpClientModule,
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
-      {path: 'matriculas', component: MatriculasComponent},
-      {path: 'cumpleanios/:accion', component: CumpleaniosComponent},
-      {path: 'deudopagado/:accion', component: DeudopagadoComponent},
-      {path: 'costoturn', component: CostoturnoComponent},
-      {path: 'costoalim', component: CostoalimentoComponent},
-      {path: 'padres', component: PadresComponent},
-      {path: 'familiares', component: FamiliaresComponent},
-      {path: 'estudiantes', component: EstudiantesComponent},
-      {path: 'usuarios', component: UsuariosComponent},
-      {path: 'mensualidades', component: MensualidadesComponent},
-      {path: 'asistencia', component: AsistenciaComponent},
-      {path: 'alimentos', component: AlimentosComponent},
-      {path: 'turnoextra', component: TurnoextraComponent},
-      {path: 'alimentoextra', component: AlimentosextraComponent}
+      {path: 'matriculas', component: MatriculasComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'cumpleanios/:accion', component: CumpleaniosComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'deudopagado/:accion', component: DeudopagadoComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'costoturn', component: CostoturnoComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'costoalim', component: CostoalimentoComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'padres', component: PadresComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'familiares', component: FamiliaresComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'estudiantes', component: EstudiantesComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'usuarios', component: UsuariosComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'mensualidades', component: MensualidadesComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'asistencia', component: AsistenciaComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'alimentos', component: AlimentosComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'turnoextra', component: TurnoextraComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'horaextra', component: HorasExtraComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'alimentoextra', component: AlimentosextraComponent, canActivate: [CanActiveGuardServiceService]}
     ]),
     MatCardModule,
     MatFormFieldModule,
@@ -118,7 +145,10 @@ import {AddMatriculaComponent} from './Componentes/DialogsC/add-matricula/add-ma
     MatSortModule, MatTableModule,
     MatPaginatorModule, MatDialogModule,
     MatSelectModule, MatDatepickerModule,
-    MatNativeDateModule, NgbAlertModule, MatAutocompleteModule, MatProgressSpinnerModule
+    MatNativeDateModule, NgbAlertModule,
+    MatAutocompleteModule, MatProgressSpinnerModule,
+    MatExpansionModule, MatIconModule,
+    MatSidenavModule, MatListModule
   ],
   providers: [
     CargaService,
@@ -128,7 +158,9 @@ import {AddMatriculaComponent} from './Componentes/DialogsC/add-matricula/add-ma
   entryComponents: [DetallesEstudianteComponent, DetallesPadreComponent, ActuaEstadEstudiComponent,
     AddUsuarioComponent, AddEstudianteComponent, EliminarComponent,
     AsignarEstudianteComponent, AddPadreComponent, AddFamiliarComponent, EditPadreComponent,
-    EditFamiliComponent, CargandoComponent, AddMatriculaComponent]
+    EditFamiliComponent, CargandoComponent, AddMatriculaComponent, DetallesMensualidadComponent,
+    AsignarTurnoComponent, AsignarAlimentosComponent, AddHoraTurnoExtraComponent, AddAlimentoExtraComponent,
+    EliminarExtraComponent]
 })
 export class AppModule {
 }

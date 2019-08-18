@@ -19,12 +19,14 @@ export class CumpleaniosComponent implements OnInit {
   columnas = ['Apellidos', 'Nombres', 'Fecha Nac.', 'Edad'];
   keydata = 'cumpleanios';
   keymens = 'mensaje';
+  keyerro = 'error';
+  visible: boolean;
 
   constructor(private rutaActiva: ActivatedRoute,
               private conexion: ConexionService,
               private router: Router) {
     this.tipo = this.rutaActiva.snapshot.params.accion;
-    this.mes = formatDate(this.fecha, 'MM', 'en-US', '+0530');
+    this.mes = formatDate(this.fecha, 'MM', 'en-US', '-0500');
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
@@ -46,6 +48,7 @@ export class CumpleaniosComponent implements OnInit {
       cumpleanios => {
         // alert(cumpleanios[this.keymens]);
         Object.keys(cumpleanios).map(() => {
+          this.visible = cumpleanios[this.keyerro] === false;
           this.cumpleanios = cumpleanios[this.keydata];
           this.dataSource.data = cumpleanios[this.keydata] as Cumpleanios[];
         });

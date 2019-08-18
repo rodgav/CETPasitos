@@ -11,7 +11,8 @@ export class ConexionService {
 
   private url0 = 'http://192.168.1.10/APICETPasitos/V1/';
 
-//  private url0 = 'https://rsgm.online/APICETPasitos/V1/';
+  // private url0 = 'https://rsgm.online/APICETPasitos/V1/';
+
   constructor(protected http: HttpClient) {
   }
 
