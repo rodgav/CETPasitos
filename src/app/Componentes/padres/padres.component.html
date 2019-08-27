@@ -1,3 +1,8 @@
+<mat-divider [inset]="true"></mat-divider>
+<div class="d-flex justify-content-center">
+  <h5>PADRES</h5>
+</div>
+<mat-divider [inset]="true"></mat-divider>
 <div fxLayout fxLayoutAlign="center center" *ngIf="visible">
   <mat-form-field fxFlex="40%">
     <label>
@@ -5,7 +10,7 @@
     </label>
   </mat-form-field>
 </div>
-
+<mat-divider [inset]="true"></mat-divider>
 <div class="mat-elevation-z8 padres-table" *ngIf="visible">
 
   <mat-table [dataSource]="dataSource" matSort matSortStart="desc">

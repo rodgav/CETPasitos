@@ -8,17 +8,23 @@ import {Alimentos} from '../../Data/Alimentos';
 import {Tipos} from '../../Data/Tipos';
 import {AHTExtras} from '../../Data/AHTExtras';
 import {EliminarExtraComponent} from '../../DialogsC/eliminar-extra/eliminar-extra.component';
+import {AsignarAlimentosComponent} from '../../DialogsC/asignar-alimentos/asignar-alimentos.component';
+import {AddAlimentoExtraComponent} from '../../DialogsC/add-alimento-extra/add-alimento-extra.component';
 
 @Component({
   selector: 'app-alimentosextra',
   templateUrl: './alimentosextra.component.html',
   styleUrls: ['./alimentosextra.component.css']
 })
-export class AlimentosextraComponent implements OnInit, AfterViewInit {
+export class AlimentosextraComponent implements OnInit {
   now = Date.now();
   fecha = '';
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   columnas = ['idmatri', 'estudiante', 'nombre', 'usuario',
     'fecha', 'eliminar'];
   form: FormGroup;
@@ -41,11 +47,6 @@ export class AlimentosextraComponent implements OnInit, AfterViewInit {
       alimento: ['', Validators.required]
     });
     this.LlenarAlimentos();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {
@@ -106,6 +107,19 @@ export class AlimentosextraComponent implements OnInit, AfterViewInit {
   }
 
   openDialog() {
-
+    const dialogConfig = new MatDialogConfig();
+    const accion = 'addalimextra';
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {accion};
+    dialogConfig.width = '800px';
+    // dialogConfig.maxWidth = '100vw !important';
+    // dialogConfig.height = '800px';
+    dialogConfig.hasBackdrop = true;
+    const dialogRef1 = this.dialog.open(AddAlimentoExtraComponent, dialogConfig);
+    dialogRef1.afterClosed().subscribe(result => {
+      this.LLenarAlimentacion(this.idcost);
+      alert(result);
+    });
   }
 }

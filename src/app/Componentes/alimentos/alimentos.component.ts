@@ -15,9 +15,13 @@ import {AsignarAlimentosComponent} from '../../DialogsC/asignar-alimentos/asigna
   templateUrl: './alimentos.component.html',
   styleUrls: ['./alimentos.component.css']
 })
-export class AlimentosComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+export class AlimentosComponent implements OnInit {
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   columnas = ['idmatri', 'apellidos', 'nombres', 'fecha', 'alimento', 'consumo',
     'asignar'];
   form: FormGroup;
@@ -45,11 +49,6 @@ export class AlimentosComponent implements OnInit, AfterViewInit {
       alimento: ['', Validators.required]
     });
     this.LlenarAlimentos();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {

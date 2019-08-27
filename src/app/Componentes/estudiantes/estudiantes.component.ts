@@ -14,9 +14,13 @@ import {AddFamiliarComponent} from '../../DialogsC/add-familiar/add-familiar.com
   templateUrl: './estudiantes.component.html',
   styleUrls: ['./estudiantes.component.css']
 })
-export class EstudiantesComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+export class EstudiantesComponent implements OnInit {
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   dataSource = new MatTableDataSource<Estudiantes>();
   estudiantes: Estudiantes[];
   columnas = ['id', 'apellidos', 'nombres', 'dni', 'fechan', 'edad',
@@ -32,11 +36,6 @@ export class EstudiantesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.LlenarEstudiantes();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {

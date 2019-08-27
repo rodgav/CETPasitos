@@ -37,6 +37,7 @@ export class AddAlimentoExtraComponent implements OnInit {
     this.accion = data.accion;
     this.fecha = formatDate(this.now, 'yyyy-MM-dd', 'en-US', '-0500');
     this.usu = this.usuarioservicio.getUsuarioLogeadoen()[0].usu;
+    console.log(this.idmatri);
   }
 
   ngOnInit() {
@@ -49,7 +50,7 @@ export class AddAlimentoExtraComponent implements OnInit {
       alimento: ['', Validators.required],
       total: ['', Validators.required]
     });
-    if (this.idmatri !== 0) {
+    if (this.idmatri > 0) {
       this.form.get('codigo').disable();
       this.Controlar(this.idest);
       this.form.patchValue({codigo: this.idest});
@@ -114,6 +115,8 @@ export class AddAlimentoExtraComponent implements OnInit {
           // alert(respuesta[this.keymens]);
           if (respuesta[this.keyerror] === false) {
             this.dialogRef.close(respuesta[this.keymensa]);
+          } else {
+            alert(respuesta[this.keymensa]);
           }
         });
       }

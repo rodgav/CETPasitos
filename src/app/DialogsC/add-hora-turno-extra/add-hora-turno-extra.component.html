@@ -30,13 +30,13 @@
   </form>
 </div>
 <div class="d-flex justify-content-center">
-  <h2>AÑADIR TURNO EXTRA</h2>
+  <h5>AÑADIR {{nombre}} EXTRA</h5>
 </div>
 <mat-dialog-content>
   <div class="container">
     <form [formGroup]="form1" (ngSubmit)="AddTurnoHora()">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <mat-form-field>
             <mat-select placeholder="Turnos" formControlName="horaturno" (selectionChange)="Selecionar($event)">
               <mat-option *ngFor="let item of horasturnos" [value]="item"
@@ -48,7 +48,18 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4" *ngIf="visible">
+          <mat-form-field class="example-full-width">
+            <label>
+              <input matInput type="number" formControlName="numero" placeholder="NUMERO HORAS EXTRA"
+                     (keyup)="SacarTotal($event.target.value)">
+            </label>
+            <mat-error *ngIf="isFieldInvalid1('numero')">
+              Ingrese el numero de horas extra
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
           <mat-form-field class="example-full-width">
             <label>
               <input matInput type="text" formControlName="total" placeholder="Total">

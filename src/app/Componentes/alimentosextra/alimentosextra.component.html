@@ -1,5 +1,9 @@
 <div class="container">
-  <mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="d-flex justify-content-center">
+    <h5>ALIMENTOS EXTRA</h5>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
   <div class="divbar">
     <form [formGroup]="form">
       <mat-form-field>
@@ -12,7 +16,7 @@
       <button mat-button color="primary" (click)="openDialog()"><i class="fa fa-plus-square"></i>Alimento extra</button>
     </form>
   </div>
-  <mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+  <mat-divider [inset]="true"></mat-divider>
 
   <div fxLayout fxLayoutAlign="center center" *ngIf="visible">
     <mat-form-field fxFlex="40%">

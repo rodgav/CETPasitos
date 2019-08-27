@@ -1,26 +1,35 @@
 <div class="container">
-  <mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="d-flex justify-content-center">
+    <h5>{{titulo}}</h5>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
   <div class="divbar">
     <form [formGroup]="form">
       <mat-form-field>
-        <mat-select placeholder="Meses" formControlName="idmes" (selectionChange)="MostrarMensualidades()">
+        <mat-select placeholder="Año" formControlName="anio" (selectionChange)="SeleccionarAnios($event)">
+          <mat-option *ngFor="let item of anios" [value]="item.nombre"> {{item.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-divider [vertical]="true"></mat-divider>
+      <mat-form-field>
+        <mat-select placeholder="Meses" formControlName="idmes" (selectionChange)="SeleccionarMeses($event)">
           <mat-option *ngFor="let item of meses" [value]="item.i"> {{item.n}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-divider [vertical]="true"></mat-divider>
+      <mat-form-field fxFlex="40%">
+        <label>
+          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
+        </label>
+      </mat-form-field>
       <span fxFlex></span>
-      <button mat-button color="primary" (click)="openDialog()"><i class="fa fa-plus-square"></i>AddPago</button>
+      <button mat-button color="primary" (click)="openDialog()"><i class="fa fa-plus-square"></i>PAGAR</button>
     </form>
   </div>
-
-  <div fxLayout fxLayoutAlign="center center" *ngIf="visible">
-    <mat-form-field fxFlex="40%">
-      <label>
-        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
-      </label>
-    </mat-form-field>
-  </div>
-
+  <mat-divider [inset]="true"></mat-divider>
   <div class="mat-elevation-z8 mensualidades-table" *ngIf="visible">
 
     <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
@@ -68,16 +77,16 @@
       </ng-container>
 
       <ng-container matColumnDef="totalm">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL MENS.</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{totalm}}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">TOTAL MENS.</span>
+          <span class="mobile-label">{{totalm}}</span>
           {{row.totalm}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="totala">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL ALIM.</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{totala}}</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <span class="mobile-label">TOTAL ALIM.</span>
+          <span class="mobile-label">{{totala}}</span>
           {{row.totala}}</mat-cell>
       </ng-container>
 

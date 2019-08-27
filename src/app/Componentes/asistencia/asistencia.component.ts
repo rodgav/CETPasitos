@@ -16,9 +16,13 @@ import {AsignarTurnoComponent} from '../../DialogsC/asignar-turno/asignar-turno.
   templateUrl: './asistencia.component.html',
   styleUrls: ['./asistencia.component.css']
 })
-export class AsistenciaComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+export class AsistenciaComponent implements OnInit {
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   columnas = ['idmatri', 'apellidos', 'nombres', 'fecha', 'turno', 'asistencia',
     'asignar'];
   dataSource = new MatTableDataSource<Asistencias>();
@@ -46,11 +50,6 @@ export class AsistenciaComponent implements OnInit, AfterViewInit {
       turno: ['', Validators.required]
     });
     this.LlenarTurnos();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {

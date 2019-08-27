@@ -16,11 +16,12 @@ export class CumpleaniosComponent implements OnInit {
   mes = '';
   dataSource = new MatTableDataSource<Cumpleanios>();
   cumpleanios: Cumpleanios[];
-  columnas = ['Apellidos', 'Nombres', 'Fecha Nac.', 'Edad'];
+  columnas = ['Apellidos', 'Nombres', 'Fecha Nac.', 'Edad', 'celular'];
   keydata = 'cumpleanios';
   keymens = 'mensaje';
   keyerro = 'error';
   visible: boolean;
+  titulo: any;
 
   constructor(private rutaActiva: ActivatedRoute,
               private conexion: ConexionService,
@@ -31,6 +32,12 @@ export class CumpleaniosComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.tipo === 'estudiantes') {
+      this.titulo = 'ESTUDIANTES';
+    } else {
+      this.titulo = 'PADRES';
+
+    }
     this.LlenarCumpleanios();
   }
 
@@ -54,5 +61,12 @@ export class CumpleaniosComponent implements OnInit {
         });
       }
     );
+  }
+
+  PDF() {
+    /* window.open('https://rsgm.online/APICETPasitos/V1/?accion=reportecumpleanios&tipo=' +
+       this.tipo + '&mes=' + this.mes, '_blank');*/
+    window.open('http://127.0.0.1/APICETPasitos/V1/?accion=reportecumpleanios&tipo=' +
+      this.tipo + '&mes=' + this.mes, '_blank');
   }
 }

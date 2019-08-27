@@ -7,18 +7,26 @@ import {ConexionService} from '../../Servicios/conexion.service';
 import {TiposT} from '../../Data/TiposT';
 import {Asistencias} from '../../Data/Asistencias';
 import {EliminarExtraComponent} from '../../DialogsC/eliminar-extra/eliminar-extra.component';
+import {AddHoraTurnoExtraComponent} from '../../DialogsC/add-hora-turno-extra/add-hora-turno-extra.component';
 
 @Component({
   selector: 'app-horas-extra',
   templateUrl: './horas-extra.component.html',
   styleUrls: ['./horas-extra.component.css']
 })
-export class HorasExtraComponent implements OnInit, AfterViewInit {
+export class HorasExtraComponent implements OnInit {
   now = Date.now();
   fecha = '';
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  columnas = ['idmatri', 'estudiante', 'nombre', 'usuario',
+
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
+
+  columnas = ['idmatri', 'estudiante', 'nombre', 'numero', 'usuario',
     'fecha', 'eliminar'];
   form: FormGroup;
   keydata = 'costhoraextra';
@@ -27,7 +35,8 @@ export class HorasExtraComponent implements OnInit, AfterViewInit {
   keymens = 'mensaje';
   visible: boolean;
   turnos: TiposT[];
-idcost = 0;
+  idcost = 0;
+
   constructor(private conexion: ConexionService,
               private fb: FormBuilder,
               private dialog: MatDialog) {
@@ -39,11 +48,6 @@ idcost = 0;
       turno: ['', Validators.required]
     });
     this.LlenarTurnos();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {
@@ -104,6 +108,19 @@ idcost = 0;
   }
 
   openDialog() {
-
+    const dialogConfig = new MatDialogConfig();
+    const accion = 'addhoraextra';
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {accion};
+    dialogConfig.width = '800px';
+    // dialogConfig.maxWidth = '100vw !important';
+    // dialogConfig.height = '800px';
+    dialogConfig.hasBackdrop = true;
+    const dialogRef1 = this.dialog.open(AddHoraTurnoExtraComponent, dialogConfig);
+    dialogRef1.afterClosed().subscribe(result => {
+      this.LlenarAsistencia(this.idcost);
+      alert(result);
+    });
   }
 }

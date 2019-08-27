@@ -13,9 +13,13 @@ import {EditPadreComponent} from '../../DialogsC/edit-padre/edit-padre.component
   templateUrl: './padres.component.html',
   styleUrls: ['./padres.component.css']
 })
-export class PadresComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+export class PadresComponent implements OnInit {
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   dataSource = new MatTableDataSource<Padres>();
   estudiantes: Padres[];
   columnas = ['dni', 'apellidos', 'nombres', 'celular',
@@ -31,11 +35,6 @@ export class PadresComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.LlenarPadres();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {

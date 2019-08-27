@@ -6,5 +6,4 @@ export class Asistencias {
   public turno: string;
   public asistencia: string;
   public idest: number;
-
 }

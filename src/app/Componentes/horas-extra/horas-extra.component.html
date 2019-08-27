@@ -1,5 +1,9 @@
 <div class="container">
-  <mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="d-flex justify-content-center">
+    <h5>HORAS EXTRA</h5>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
   <div class="divbar">
     <form [formGroup]="form">
       <mat-form-field>
@@ -13,7 +17,7 @@
       <button mat-button color="primary" (click)="openDialog()"><i class="fa fa-plus-square"></i>Hora extra</button>
     </form>
   </div>
-  <mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+  <mat-divider [inset]="true"></mat-divider>
 
 
   <div fxLayout fxLayoutAlign="center center" *ngIf="visible">
@@ -47,6 +51,13 @@
         <mat-cell *matCellDef="let row">
           <span class="mobile-label">NOMBRE</span>
           {{row.nombre}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="numero">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>NUMERO</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">NUMERO</span>
+          {{row.numero}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="usuario">

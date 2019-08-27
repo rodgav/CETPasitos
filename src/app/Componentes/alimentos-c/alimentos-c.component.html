@@ -1,0 +1,58 @@
+<div class="container">
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="d-flex justify-content-center">
+    <h5>ALIMENTOS</h5>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="divbar">
+      <mat-form-field fxFlex="40%">
+        <label>
+          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
+        </label>
+      </mat-form-field>
+      <span fxFlex></span>
+      <button mat-button color="primary" (click)="openDialog()"><i class="fa fa-plus-square"></i>ALIMENTO</button>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="mat-elevation-z8 mensualidades-table" *ngIf="visible">
+
+    <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
+
+      <ng-container matColumnDef="nombrea">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">NOMBRE</span>
+          {{row.nombre}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="costod">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>COSTO ALIMENTO ADIC.</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">COSTO ALIMENTO ADIC.</span>
+          {{row.costodia}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="costom">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>COSTO ALIMENTO ADIC.</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">COSTO MENSUALIDAD.</span>
+          {{row.costom}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="editar">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>EDITAR</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">EDITAR</span>
+          <button mat-icon-button color="primary" (click)="Editar(row.ida,row.idc)">
+            <i class="fa fa-edit"></i>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+    </mat-paginator>
+  </div>
+</div>

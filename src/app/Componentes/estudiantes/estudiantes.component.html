@@ -1,20 +1,21 @@
 <div class="container">
   <mat-divider [inset]="true"></mat-divider>
+  <div class="d-flex justify-content-center">
+    <h5>ESTUDIANTES</h5>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
   <div class="divbar">
+    <mat-form-field fxFlex="40%">
+      <label>
+        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
+      </label>
+    </mat-form-field>
+    <span fxFlex></span>
     <form>
-      <span fxFlex></span>
       <button mat-button color="primary" (click)="openDialog()"><i class="fa fa-plus-square"></i>Estudiante</button>
     </form>
   </div>
   <mat-divider [inset]="true"></mat-divider>
-</div>
-
-<div fxLayout fxLayoutAlign="center center" *ngIf="visible">
-  <mat-form-field fxFlex="40%">
-    <label>
-      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
-    </label>
-  </mat-form-field>
 </div>
 
 <div class="mat-elevation-z8 estudiantes-table" *ngIf="visible">

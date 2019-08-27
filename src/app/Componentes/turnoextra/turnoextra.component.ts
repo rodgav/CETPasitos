@@ -7,17 +7,22 @@ import {ConexionService} from '../../Servicios/conexion.service';
 import {formatDate} from '@angular/common';
 import {EliminarComponent} from '../../DialogsC/eliminar/eliminar.component';
 import {EliminarExtraComponent} from '../../DialogsC/eliminar-extra/eliminar-extra.component';
+import {AddHoraTurnoExtraComponent} from '../../DialogsC/add-hora-turno-extra/add-hora-turno-extra.component';
 
 @Component({
   selector: 'app-turnoextra',
   templateUrl: './turnoextra.component.html',
   styleUrls: ['./turnoextra.component.css']
 })
-export class TurnoextraComponent implements OnInit, AfterViewInit {
+export class TurnoextraComponent implements OnInit {
   now = Date.now();
   fecha = '';
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   columnas = ['idmatri', 'estudiante', 'nombre', 'usuario',
     'fecha', 'eliminar'];
   form: FormGroup;
@@ -40,11 +45,6 @@ export class TurnoextraComponent implements OnInit, AfterViewInit {
       turno: ['', Validators.required]
     });
     this.LlenarTurnos();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {
@@ -105,6 +105,19 @@ export class TurnoextraComponent implements OnInit, AfterViewInit {
   }
 
   openDialog() {
-
+    const dialogConfig = new MatDialogConfig();
+    const accion = 'addturnextra';
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {accion};
+    dialogConfig.width = '800px';
+    // dialogConfig.maxWidth = '100vw !important';
+    // dialogConfig.height = '800px';
+    dialogConfig.hasBackdrop = true;
+    const dialogRef1 = this.dialog.open(AddHoraTurnoExtraComponent, dialogConfig);
+    dialogRef1.afterClosed().subscribe(result => {
+      this.LlenarAsistencia(this.idcost);
+      alert(result);
+    });
   }
 }

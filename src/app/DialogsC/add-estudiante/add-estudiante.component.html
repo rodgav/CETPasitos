@@ -55,38 +55,30 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input type="text" placeholder="Lugar Nacimiento: Departamento-Provincia-Distrito" matInput
-             formControlName="lugnac"
-             [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option style="width:2000px;" *ngFor="let item of lugnacfilter | async"
-                    (onSelectionChange)="Seleccionado(item.id)" [value]="item.nombre">
-          {{item.nombre}}
-        </mat-option>
-        <mat-error *ngIf="isFieldInvalid('lugnac')">
-          Escoja un lugar de nacimiento
-        </mat-error>
-      </mat-autocomplete>
+      <label>
+        <input matInput type="text" formControlName="lugnac" placeholder="Lugar Nacimiento">
+      </label>
+      <mat-error *ngIf="isFieldInvalid('lugnac')">
+        Ingrese su lugar nacimiento
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="Establecimiento" formControlName="establecimiento">
-        <mat-option *ngFor="let item of establecimientos" [value]="item.id"> {{item.nombre}}
-        </mat-option>
-        <mat-error *ngIf="isFieldInvalid('establecimiento')">
-          Escoja un establecimiento
-        </mat-error>
-      </mat-select>
+      <label>
+        <input matInput type="text" formControlName="establecimiento" placeholder="Establecimiento de atencion">
+      </label>
+      <mat-error *ngIf="isFieldInvalid('establecimiento')">
+        Ingrese el establecimiento de atencion
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="Religion" formControlName="religion">
-        <mat-option *ngFor="let item of religiones" [value]="item.id"> {{item.nombre}}
-        </mat-option>
-        <mat-error *ngIf="isFieldInvalid('religion')">
-          Escoja un establecimiento
-        </mat-error>
-      </mat-select>
+      <label>
+        <input matInput type="text" formControlName="religion" placeholder="Religion">
+      </label>
+      <mat-error *ngIf="isFieldInvalid('religion')">
+        Ingrese la religion
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>

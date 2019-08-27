@@ -12,9 +12,13 @@ import {EliminarComponent} from '../../DialogsC/eliminar/eliminar.component';
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
-export class UsuariosComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+export class UsuariosComponent implements OnInit {
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   dataSource = new MatTableDataSource<Usuario>();
   usuarios: Usuario[];
   columnas = ['dni', 'nombres', 'tipo'
@@ -29,11 +33,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.LlenarUsuarios();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {

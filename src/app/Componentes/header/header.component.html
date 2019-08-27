@@ -16,7 +16,8 @@
       <button mat-button [matMenuTriggerFor]="admpagos">ADM. PAGOS</button>
       <mat-menu #admpagos="matMenu">
         <button mat-menu-item [routerLink]="['/matriculas']">MATRICULA</button>
-        <button mat-menu-item [routerLink]="['/mensualidades']">MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/mensualidades','1']">MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/mensualidades','2']">EXTRAS</button>
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="admserv">ADM. SERVICIOS</button>
       <mat-menu #admserv="matMenu">
@@ -28,18 +29,27 @@
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="admcost">ADM. COSTOS</button>
       <mat-menu #admcost="matMenu">
-        <button mat-menu-item [routerLink]="['/costoturn']">COSTOS TURNOS</button>
-        <button mat-menu-item [routerLink]="['/costoalim']">COSTOS ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/turnosc']">TURNOS</button>
+        <button mat-menu-item [routerLink]="['/alimentosc']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/costomatriturno']">COSTOS MATRICULAS TURNOS</button>
+        <button mat-menu-item [routerLink]="['/costomensuturno']">COSTOS MENSUALIDADES TURNOS</button>
+        <button mat-menu-item [routerLink]="['/costomensualimen']">COSTOS MENSUALIDADES ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/costoturn']">COSTOS TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/costohora']">COSTOS HORAS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/costoalim']">COSTOS ALIMENTOS EXTRA</button>
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="report">REPORTES</button>
       <mat-menu #report="matMenu">
         <button mat-menu-item [routerLink]="['/cumpleanios','estudiantes']">CUMPLEAÑOS ESTUDIANTES</button>
         <button mat-menu-item [routerLink]="['/cumpleanios','padres']">CUMPLEAÑOS PADRES</button>
-        <button mat-menu-item [routerLink]="['/deudopagado','morosos']">MOROSOS</button>
-        <button mat-menu-item [routerLink]="['/deudopagado','pagados']">PAGADOS</button>
-        <button mat-menu-item [routerLink]="['/Rasistencia']">ASISTENCIA</button>
-        <button mat-menu-item [routerLink]="['/Ralimentos']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','morosos','1']">MOROSOS MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','pagados','1']">PAGADOS MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','morosos','2']">MOROSOS EXTRAS</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','pagados','2']">PAGADOS EXTRAS</button>
+        <button mat-menu-item [routerLink]="['/Rasistenciaalimento','turnos']">ASISTENCIA</button>
+        <button mat-menu-item [routerLink]="['/Rasistenciaalimento','alimentos']">ALIMENTOS</button>
         <button mat-menu-item [routerLink]="['/Rturnoextra']">TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/RHoraextra']">HORAS EXTRA</button>
         <button mat-menu-item [routerLink]="['/Ralimentoextra']">ALIMENTOS EXTRA</button>
       </mat-menu>
       <button mat-button (click)="Salir()" *ngIf="logeado">SALIR</button>
@@ -65,7 +75,8 @@
       <button mat-button [matMenuTriggerFor]="admpagos">ADM. PAGOS</button>
       <mat-menu #admpagos="matMenu">
         <button mat-menu-item [routerLink]="['/matriculas']">MATRICULA</button>
-        <button mat-menu-item [routerLink]="['/mensualidades']">MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/mensualidades','1']">MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/mensualidades','2']">EXTRAS</button>
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="admserv">ADM. SERVICIOS</button>
       <mat-menu #admserv="matMenu">
@@ -77,18 +88,27 @@
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="admcost">ADM. COSTOS</button>
       <mat-menu #admcost="matMenu">
-        <button mat-menu-item [routerLink]="['/costoturn']">COSTOS TURNOS</button>
-        <button mat-menu-item [routerLink]="['/costoalim']">COSTOS ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/turnosc']">TURNOS</button>
+        <button mat-menu-item [routerLink]="['/alimentosc']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/costomatriturno']">COSTOS MATRICULAS TURNOS</button>
+        <button mat-menu-item [routerLink]="['/costomensuturno']">COSTOS MENSUALIDADES TURNOS</button>
+        <button mat-menu-item [routerLink]="['/costomensualimen']">COSTOS MENSUALIDADES ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/costoturn']">COSTOS TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/costohora']">COSTOS HORAS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/costoalim']">COSTOS ALIMENTOS EXTRA</button>
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="report">REPORTES</button>
       <mat-menu #report="matMenu">
         <button mat-menu-item [routerLink]="['/cumpleanios','estudiantes']">CUMPLEAÑOS ESTUDIANTES</button>
         <button mat-menu-item [routerLink]="['/cumpleanios','padres']">CUMPLEAÑOS PADRES</button>
-        <button mat-menu-item [routerLink]="['/deudopagado','morosos']">MOROSOS</button>
-        <button mat-menu-item [routerLink]="['/deudopagado','pagados']">PAGADOS</button>
-        <button mat-menu-item [routerLink]="['/Rasistencia']">ASISTENCIA</button>
-        <button mat-menu-item [routerLink]="['/Ralimentos']">ALIMENTOS</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','morosos','1']">MOROSOS MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','pagados','1']">PAGADOS MENSUALIDADES</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','morosos','2']">MOROSOS EXTRAS</button>
+        <button mat-menu-item [routerLink]="['/deudopagado','pagados','2']">PAGADOS EXTRAS</button>
+        <button mat-menu-item [routerLink]="['/Rasistenciaalimento','turnos']">ASISTENCIA</button>
+        <button mat-menu-item [routerLink]="['/Rasistenciaalimento','alimentos']">ALIMENTOS</button>
         <button mat-menu-item [routerLink]="['/Rturnoextra']">TURNOS EXTRA</button>
+        <button mat-menu-item [routerLink]="['/RHoraextra']">HORAS EXTRA</button>
         <button mat-menu-item [routerLink]="['/Ralimentoextra']">ALIMENTOS EXTRA</button>
       </mat-menu>
       <span fxFlex></span>

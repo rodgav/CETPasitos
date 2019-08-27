@@ -17,19 +17,11 @@ import {CargandoComponent} from '../cargando/cargando.component';
 export class AddEstudianteComponent implements OnInit {
   form: FormGroup;
   private formSubmitAttempt: boolean;
-  religiones: Tipos[];
   estados: Tipos[];
-  establecimientos: Tipos[];
-  lugnac: Tipos[];
   keydata = 'detallestud';
   keydatae = 'estados';
-  keydataes = 'establecimientos';
-  keydatar = 'religiones';
-  keydatal = 'lugnacimiento';
   keymens = 'mensaje';
   keyerr = 'error';
-  lugnacfilter: Observable<any[]>;
-  idl = 0;
   id = 0;
   agregar = '';
   accion = '';
@@ -67,10 +59,7 @@ export class AddEstudianteComponent implements OnInit {
       this.titulo = 'AÑADIR ESTUDIANTE';
       this.visible = false;
     }
-    this.LlenarReligon();
     this.LlenarEstado();
-    this.LlenarEstablecimientos();
-    this.LLenarLugNac();
   }
 
   isFieldInvalid(field: string) {
@@ -99,20 +88,6 @@ export class AddEstudianteComponent implements OnInit {
     );
   }
 
-  private LlenarReligon() {
-    const formData = new FormData();
-    formData.append('accion', this.keydatar);
-    this.conexion.servicio(formData).subscribe(
-      religiones => {
-        Object.keys(religiones).map(() => {
-          this.religiones = religiones[this.keydatar];
-          // console.log(key);
-          // console.log(usuario[key]);
-        });
-      }
-    );
-  }
-
   private LlenarEstado() {
     const formData = new FormData();
     formData.append('accion', this.keydatae);
@@ -120,20 +95,6 @@ export class AddEstudianteComponent implements OnInit {
       estados => {
         Object.keys(estados).map(() => {
           this.estados = estados[this.keydatae];
-          // console.log(key);
-          // console.log(usuario[key]);
-        });
-      }
-    );
-  }
-
-  private LlenarEstablecimientos() {
-    const formData = new FormData();
-    formData.append('accion', this.keydataes);
-    this.conexion.servicio(formData).subscribe(
-      estable => {
-        Object.keys(estable).map(() => {
-          this.establecimientos = estable[this.keydataes];
           // console.log(key);
           // console.log(usuario[key]);
         });
@@ -153,7 +114,7 @@ export class AddEstudianteComponent implements OnInit {
     formData.append('direccion', this.form.get('direccion').value);
     formData.append('dni', this.form.get('dni').value);
     formData.append('fechan', fecha);
-    formData.append('lugnac', this.idl.toString());
+    formData.append('lugnac', this.form.get('lugnac').value);
     formData.append('estable', this.form.get('establecimiento').value);
     formData.append('religion', this.form.get('religion').value);
     formData.append('estado', this.form.get('estado').value);
@@ -182,6 +143,8 @@ export class AddEstudianteComponent implements OnInit {
                 this.dialogRef.close();
               });*/
             }
+          } else {
+            alert(respuesta[this.keymens]);
           }
         });
       }
@@ -190,30 +153,5 @@ export class AddEstudianteComponent implements OnInit {
 
   Cerrar() {
     this.dialogRef.close('Cancelado');
-  }
-
-  private LLenarLugNac() {
-    const formData = new FormData();
-    formData.append('accion', this.keydatal);
-    this.conexion.servicio(formData).subscribe(
-      lugnac => {
-        Object.keys(lugnac).map(() => {
-          this.lugnac = lugnac[this.keydatal];
-          this.lugnacfilter = this.form.get('lugnac').valueChanges
-            .pipe(
-              startWith(''),
-              map(value => this._filter(value))
-            );
-        });
-      }
-    );
-  }
-
-  Seleccionado(idl: number) {
-    this.idl = idl;
-  }
-
-  private _filter(value: string): any[] {
-    return this.lugnac.filter(item => item.nombre.toLowerCase().indexOf(value.toLowerCase()) === 0);
   }
 }

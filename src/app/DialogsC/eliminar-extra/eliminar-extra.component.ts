@@ -19,7 +19,6 @@ export class EliminarExtraComponent implements OnInit {
   constructor(private conexion: ConexionService,
               public dialogRef: MatDialogRef<EliminarExtraComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data);
     this.accion = data.accion;
     this.estudiante = data.row.estudiante;
     this.nombre = data.row.nombre;

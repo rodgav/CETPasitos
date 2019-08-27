@@ -26,6 +26,10 @@ export class AddHoraTurnoExtraComponent implements OnInit {
   form1: FormGroup;
   idcostturn = 0;
   keymensa = 'mensaje';
+  nombre: any;
+  numero = 1;
+  totalturno = 0;
+  visible: boolean;
 
   constructor(public dialogRef: MatDialogRef<AddHoraTurnoExtraComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,9 +51,10 @@ export class AddHoraTurnoExtraComponent implements OnInit {
     });
     this.form1 = this.fb.group({
       horaturno: ['', Validators.required],
-      total: ['', Validators.required]
+      total: ['', Validators.required],
+      numero: ['', Validators.required]
     });
-    if (this.idmatri !== 0) {
+    if (this.idmatri > 0) {
       this.form.get('codigo').disable();
       this.Controlar(this.idest);
       this.form.patchValue({codigo: this.idest});
@@ -57,9 +62,13 @@ export class AddHoraTurnoExtraComponent implements OnInit {
     this.form1.get('total').disable();
     this.form.get('nombres').disable();
     this.form.get('codmatri').disable();
+    this.form1.patchValue({numero: 1});
     if (this.accion === 'addturnextra') {
+      this.form1.get('numero').disable();
+      this.visible = false;
       this.LlenarHoraTurno('costturnextra');
     } else {
+      this.visible = true;
       this.LlenarHoraTurno('costhoraextra');
     }
   }
@@ -112,12 +121,15 @@ export class AddHoraTurnoExtraComponent implements OnInit {
     formData.append('idcostturn', this.idcostturn.toString());
     formData.append('fecha', this.fecha);
     formData.append('usu', this.usu.toString());
+    formData.append('numero', this.form1.get('numero').value);
     this.conexion.servicio(formData).subscribe(
       respuesta => {
         Object.keys(respuesta).map(() => {
           // alert(respuesta[this.keymens]);
           if (respuesta[this.keyerror] === false) {
             this.dialogRef.close(respuesta[this.keymensa]);
+          } else {
+            alert(respuesta[this.keymensa]);
           }
         });
       }
@@ -126,8 +138,10 @@ export class AddHoraTurnoExtraComponent implements OnInit {
 
   Selecionar($event: MatSelectChange) {
     this.idcostturn = $event.value.id;
+    this.totalturno = $event.value.total;
+    const total1 = this.numero * this.totalturno;
     this.form1.patchValue({
-      total: $event.value.total
+      total: total1
     });
   }
 
@@ -143,5 +157,13 @@ export class AddHoraTurnoExtraComponent implements OnInit {
         });
       }
     );
+  }
+
+  SacarTotal(value: any) {
+    this.numero = value;
+    const total1 = this.totalturno * this.numero;
+    this.form1.patchValue({
+      total: total1
+    });
   }
 }

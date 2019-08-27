@@ -70,6 +70,18 @@ import {AddHoraTurnoExtraComponent} from './DialogsC/add-hora-turno-extra/add-ho
 import {AddAlimentoExtraComponent} from './DialogsC/add-alimento-extra/add-alimento-extra.component';
 import {EliminarExtraComponent} from './DialogsC/eliminar-extra/eliminar-extra.component';
 import {HorasExtraComponent} from './Componentes/horas-extra/horas-extra.component';
+import {CostoHoraComponent} from './Componentes/costo-hora/costo-hora.component';
+import {CostoMensuTurnoComponent} from './Componentes/costo-mensu-turno/costo-mensu-turno.component';
+import {CostoMensuAlimenComponent} from './Componentes/costo-mensu-alimen/costo-mensu-alimen.component';
+import {AddTurnoComponent} from './DialogsC/add-turno/add-turno.component';
+import {AddAlimentoComponent} from './DialogsC/add-alimento/add-alimento.component';
+import { CostoMatriculaComponent } from './Componentes/costo-matricula/costo-matricula.component';
+import { TurnosCComponent } from './Componentes/turnos-c/turnos-c.component';
+import { AlimentosCComponent } from './Componentes/alimentos-c/alimentos-c.component';
+import { ReporteAsistenciaAlimentoComponent } from './Componentes/reporte-asistencia-alimento/reporte-asistencia-alimento.component';
+import { ReporteTurnoExtraComponent } from './Componentes/reporte-turno-extra/reporte-turno-extra.component';
+import { ReporteHoraExtraComponent } from './Componentes/reporte-hora-extra/reporte-hora-extra.component';
+import { ReporteAlimentoExtraComponent } from './Componentes/reporte-alimento-extra/reporte-alimento-extra.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +122,19 @@ import {HorasExtraComponent} from './Componentes/horas-extra/horas-extra.compone
     AddHoraTurnoExtraComponent,
     AddAlimentoExtraComponent,
     EliminarExtraComponent,
-    HorasExtraComponent
+    HorasExtraComponent,
+    CostoHoraComponent,
+    CostoMensuTurnoComponent,
+    CostoMensuAlimenComponent,
+    AddTurnoComponent,
+    AddAlimentoComponent,
+    CostoMatriculaComponent,
+    TurnosCComponent,
+    AlimentosCComponent,
+    ReporteAsistenciaAlimentoComponent,
+    ReporteTurnoExtraComponent,
+    ReporteHoraExtraComponent,
+    ReporteAlimentoExtraComponent
   ],
   imports: [
     BrowserModule,
@@ -120,19 +144,29 @@ import {HorasExtraComponent} from './Componentes/horas-extra/horas-extra.compone
       {path: 'login', component: LoginComponent},
       {path: 'matriculas', component: MatriculasComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'cumpleanios/:accion', component: CumpleaniosComponent, canActivate: [CanActiveGuardServiceService]},
-      {path: 'deudopagado/:accion', component: DeudopagadoComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'deudopagado/:accion/:tipo', component: DeudopagadoComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'costoturn', component: CostoturnoComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'costoalim', component: CostoalimentoComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'padres', component: PadresComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'familiares', component: FamiliaresComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'estudiantes', component: EstudiantesComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'usuarios', component: UsuariosComponent, canActivate: [CanActiveGuardServiceService]},
-      {path: 'mensualidades', component: MensualidadesComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'mensualidades/:tipo', component: MensualidadesComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'asistencia', component: AsistenciaComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'alimentos', component: AlimentosComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'turnoextra', component: TurnoextraComponent, canActivate: [CanActiveGuardServiceService]},
       {path: 'horaextra', component: HorasExtraComponent, canActivate: [CanActiveGuardServiceService]},
-      {path: 'alimentoextra', component: AlimentosextraComponent, canActivate: [CanActiveGuardServiceService]}
+      {path: 'alimentoextra', component: AlimentosextraComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'costohora', component: CostoHoraComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'costomensuturno', component: CostoMensuTurnoComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'costomensualimen', component: CostoMensuAlimenComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'costomatriturno', component: CostoMatriculaComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'turnosc', component: TurnosCComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'alimentosc', component: AlimentosCComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'Rasistenciaalimento/:accion', component: ReporteAsistenciaAlimentoComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'Rturnoextra', component: ReporteTurnoExtraComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'RHoraextra', component: ReporteHoraExtraComponent, canActivate: [CanActiveGuardServiceService]},
+      {path: 'Ralimentoextra', component: ReporteAlimentoExtraComponent, canActivate: [CanActiveGuardServiceService]},
     ]),
     MatCardModule,
     MatFormFieldModule,
@@ -160,7 +194,7 @@ import {HorasExtraComponent} from './Componentes/horas-extra/horas-extra.compone
     AsignarEstudianteComponent, AddPadreComponent, AddFamiliarComponent, EditPadreComponent,
     EditFamiliComponent, CargandoComponent, AddMatriculaComponent, DetallesMensualidadComponent,
     AsignarTurnoComponent, AsignarAlimentosComponent, AddHoraTurnoExtraComponent, AddAlimentoExtraComponent,
-    EliminarExtraComponent]
+    EliminarExtraComponent, AddTurnoComponent, AddAlimentoComponent]
 })
 export class AppModule {
 }

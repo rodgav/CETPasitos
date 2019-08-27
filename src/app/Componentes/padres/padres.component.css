@@ -21,6 +21,10 @@
   display: none;
 }
 
+.mat-form-field {
+  display: block;
+}
+
 @media(max-width: 600px) {
   .mobile-label {
     width: 100px;

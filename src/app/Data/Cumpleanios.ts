@@ -3,4 +3,5 @@ export class Cumpleanios {
   public nombres: string;
   public fechan: string;
   public edad: number;
+  public celular: number;
 }

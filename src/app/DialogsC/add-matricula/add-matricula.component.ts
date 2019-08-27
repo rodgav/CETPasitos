@@ -26,7 +26,7 @@ export class AddMatriculaComponent implements OnInit {
   keyerror = 'error';
   keymensa = 'mensaje';
   keydatat = 'turnos';
-  keydataa = 'anios';
+  keydataa = 'selmaxanios';
   keydataal = 'almuerzos';
   keydatar = 'refrigerios';
   totalme1 = 0;
@@ -48,7 +48,7 @@ export class AddMatriculaComponent implements OnInit {
   }
 
   ngOnInit() {
-    const fecha = formatDate(this.now, 'yyyy-MM-dd', 'en-US', '-0500');
+    const fecha = formatDate(this.now, 'MM/dd/yyyy', 'en-US', '-0500');
     this.form = this.fb.group({
       codigo: ['', Validators.required],
       nombres: ['', Validators.required],
@@ -95,11 +95,12 @@ export class AddMatriculaComponent implements OnInit {
   AgregarMatricula() {
     const formData = new FormData();
     const aniomes = formatDate(this.fecha, 'yyyy-MM', 'en-US', '-0500');
-    const fechan = formatDate(this.form.get('fechaini').value, 'yyyy-MM-dd', 'en-US', '-0500');
+    const fechaini = formatDate(this.form.get('fechaini').value, 'yyyy-MM-dd', 'en-US', '-0500');
+    const fechains = formatDate(this.form.get('fechains').value, 'yyyy-MM-dd', 'en-US', '-0500');
     const usu = this.usuarioservicio.getUsuarioLogeadoen()[0].usu;
     formData.append('accion', 'addmatri');
-    formData.append('fechains', this.form.get('fechains').value);
-    formData.append('fechaini', fechan);
+    formData.append('fechains', fechains);
+    formData.append('fechaini', fechaini);
     formData.append('idcostotur', this.idcosturn.toString());
     formData.append('idalmuer', this.idalmuer.toString());
     formData.append('idrefri', this.idrefri.toString());
@@ -120,6 +121,8 @@ export class AddMatriculaComponent implements OnInit {
           // alert(respuesta[this.keymens]);
           if (respuesta[this.keyerror] === false) {
             this.dialogRef.close(respuesta[this.keymensa]);
+          } else {
+            alert(respuesta[this.keymensa]);
           }
         });
       }

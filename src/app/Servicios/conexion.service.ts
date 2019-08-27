@@ -9,7 +9,7 @@ import {Usuario} from '../Data/Usuario';
 })
 export class ConexionService {
 
-  private url0 = 'http://192.168.1.10/APICETPasitos/V1/';
+  private url0 = 'http://127.0.0.1/APICETPasitos/V1/';
 
   // private url0 = 'https://rsgm.online/APICETPasitos/V1/';
 

@@ -11,9 +11,13 @@ import {Familiares} from '../../Data/Familiares';
   templateUrl: './familiares.component.html',
   styleUrls: ['./familiares.component.css']
 })
-export class FamiliaresComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, {static: false}) paginacion: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+export class FamiliaresComponent implements OnInit {
+  @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
+    this.dataSource.paginator = paginacion;
+  }
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
   dataSource = new MatTableDataSource<Familiares>();
   familiares: Familiares[];
   columnas = ['dni', 'apellidos', 'nombres', 'celular'
@@ -29,11 +33,6 @@ export class FamiliaresComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.LlenarFamiliares();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginacion;
   }
 
   public doFilter = (value: string) => {

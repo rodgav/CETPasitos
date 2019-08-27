@@ -15,8 +15,7 @@ class ListaPadres {
     public apellidos: string,
     public direccion: string,
     public fechan: string,
-    public idlugn: number,
-    public nombrel: string,
+    public lugnac: string,
     public celular: number,
     public telfi: number,
     public profesion: string,
@@ -42,21 +41,16 @@ export class AddPadreComponent implements OnInit {
     'nombref', 'eliminar'];
   private formSubmitAttempt: boolean;
   private success = new Subject<string>();
-  lugnacfilter: Observable<any[]>;
   dataSource = new MatTableDataSource<ListaPadres>();
   padres: ListaPadres[] = [];
   mensaje: string;
   dnie = 0;
-  idl = 0;
-  lugnac: Tipos[];
   estadoscivil: Tipos[];
   familiar: Tipos[];
   keymens = 'mensaje';
-  keydatal = 'lugnacimiento';
   keydatae = 'estacivil';
   keydatap = 'tipopadres';
   keyerror = 'error';
-  nombrel: string;
   nombref: string;
   nombrec: string;
   accion = '';
@@ -92,7 +86,6 @@ export class AddPadreComponent implements OnInit {
       debounceTime(5000)
     ).subscribe(() => this.mensaje = null);
 
-    this.LLenarLugNac();
     this.LlenarEstaCivi();
     this.LlenarTipoFamili();
 
@@ -111,19 +104,22 @@ export class AddPadreComponent implements OnInit {
     const apellidos = this.form.get('apellidos').value;
     const direccion = this.form.get('direccion').value;
     const fechan = formatDate(this.form.get('fechan').value, 'yyyy-MM-dd', 'en-US', '-0500');
-    const lugnac = this.idl;
+    const lugnac = this.form.get('lugnac').value;
     const celular = this.form.get('celular').value;
-    const telfijo = this.form.get('telfijo').value;
+    let telfijo = this.form.get('telfijo').value;
     const profesion = this.form.get('profesion').value;
     const centrotrab = this.form.get('centrotrab').value;
     const email = this.form.get('email').value;
     const estacivil = this.form.get('estacivil').value;
     const tipofamili = this.form.get('tipofamili').value;
     if (dni !== '' && nombres !== '' && apellidos !== '' && direccion !== '' && fechan !== '' && lugnac !== 0
-      && celular !== '' && telfijo !== '' && profesion !== '' && centrotrab !== '' && email !== '' && estacivil !== ''
+      && celular !== '' && profesion !== '' && centrotrab !== '' && email !== '' && estacivil !== ''
       && tipofamili !== '') {
+      if (telfijo !== '') {
+        telfijo = 0;
+      }
       if (!(this.padres.some(x => x.dni === dni))) {
-        this.padres.push(new ListaPadres(dni, nombres, apellidos, direccion, fechan, lugnac, this.nombrel, celular, telfijo,
+        this.padres.push(new ListaPadres(dni, nombres, apellidos, direccion, fechan, lugnac, celular, telfijo,
           profesion, centrotrab, email, estacivil, this.nombrec, tipofamili, this.nombref));
         this.dataSource.data = this.padres as ListaPadres[];
         this.form.patchValue({
@@ -141,7 +137,6 @@ export class AddPadreComponent implements OnInit {
           estacivil: '',
           tipofamili: '',
         });
-        this.Seleccionado(0, '');
       } else {
         this.success.next('El padre de familia ya esta agregado');
       }
@@ -166,7 +161,7 @@ export class AddPadreComponent implements OnInit {
       this.array.push(row.apellidos);
       this.array.push(row.direccion);
       this.array.push(row.fechan);
-      this.array.push((row.idlugn).toString());
+      this.array.push(row.lugnac);
       this.array.push((row.celular).toString());
       this.array.push((row.telfi).toString());
       this.array.push(row.profesion);
@@ -212,23 +207,6 @@ export class AddPadreComponent implements OnInit {
     this.dataSource.data = this.padres as ListaPadres[];
   }
 
-  private LLenarLugNac() {
-    const formData = new FormData();
-    formData.append('accion', this.keydatal);
-    this.conexion.servicio(formData).subscribe(
-      lugnac => {
-        Object.keys(lugnac).map(() => {
-          this.lugnac = lugnac[this.keydatal];
-          this.lugnacfilter = this.form.get('lugnac').valueChanges
-            .pipe(
-              startWith(''),
-              map(value => this._filter(value))
-            );
-        });
-      }
-    );
-  }
-
   private LlenarEstaCivi() {
     const formData = new FormData();
     formData.append('accion', this.keydatae);
@@ -255,16 +233,6 @@ export class AddPadreComponent implements OnInit {
         });
       }
     );
-  }
-
-  private _filter(value: string): any[] {
-    return this.lugnac.filter(item => item.nombre.toLowerCase().indexOf(value.toLowerCase()) === 0);
-  }
-
-  Seleccionado(idl: number, nombre: string) {
-    // console.log(id + ' ' + precio);
-    this.idl = idl;
-    this.nombrel = nombre;
   }
 
   SelecTipFam(nombre: string) {

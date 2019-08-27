@@ -6,6 +6,7 @@ import {Mensualidad} from '../../Data/Mensualidad';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UsuarioService} from '../../Servicios/usuario.service';
 import {formatDate} from '@angular/common';
+import {HorasExtra} from '../../Data/HorasExtra';
 
 @Component({
   selector: 'app-detalles-mensualidad',
@@ -27,8 +28,8 @@ export class DetallesMensualidadComponent implements OnInit {
   columnasa = ['fecha', 'nombre', 'total'];
   alimentosextra: Extras[];
   keydataa = 'selalimentosextra';
-  dataSourceh = new MatTableDataSource<Extras>();
-  columnash = ['fecha', 'nombre', 'total'];
+  dataSourceh = new MatTableDataSource<HorasExtra>();
+  columnash = ['fecha', 'nombre', 'cantidad', 'subtotal', 'total'];
   horasextra: Extras[];
   keydatah = 'selhoraextra';
   dataSourcet = new MatTableDataSource<Extras>();
@@ -201,7 +202,7 @@ export class DetallesMensualidadComponent implements OnInit {
       horextra => {
         Object.keys(horextra).map(() => {
           this.horasextra = horextra[this.keydatah];
-          this.dataSourceh.data = horextra[this.keydatah] as Extras[];
+          this.dataSourceh.data = horextra[this.keydatah] as HorasExtra[];
           this.TotalHoraExtra();
         });
       }

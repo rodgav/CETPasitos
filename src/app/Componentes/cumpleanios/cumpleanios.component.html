@@ -1,9 +1,19 @@
-<div fxLayout fxLayoutAlign="center center" *ngIf="visible">
-  <mat-form-field fxFlex="40%">
-    <label>
-      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
-    </label>
-  </mat-form-field>
+<div class="container">
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="d-flex justify-content-center">
+    <h5>REPORTE CUMPLEAÑOS {{titulo}}</h5>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
+  <div class="divbar">
+    <mat-form-field fxFlex="40%">
+      <label>
+        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
+      </label>
+    </mat-form-field>
+    <span fxFlex></span>
+    <button class='text-danger' mat-button (click)="PDF()"><i class="fa fa-file-pdf-o"></i>PDF</button>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
 </div>
 <div class="mat-elevation-z8 cumpleanios" *ngIf="visible">
 
@@ -35,6 +45,13 @@
       <mat-cell *matCellDef="let row">
         <span class="mobile-label">EDAD</span>
         {{row.edad}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="celular">
+      <mat-header-cell *matHeaderCellDef>CELULAR</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">CELULAR</span>
+        {{row.celular}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
