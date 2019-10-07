@@ -8,8 +8,8 @@
       <div class="col-sm-4">
         <mat-form-field class="example-full-width">
           <label>
-            <input matInput type="number" formControlName="codigo" placeholder="Codigo Estudiante"
-                   (keyup)="Controlar($event)">
+            <input matInput type="number" formControlName="codigo" placeholder="Codigo o DNI Estudiante"
+                   (keyup)="Controlar($event.target.value)">
           </label>
           <mat-error *ngIf="isFieldInvalid('codigo')">
             Ingrese el codigo del estudiante
@@ -85,6 +85,16 @@
             </mat-option>
             <mat-error *ngIf="isFieldInvalid('refrigerio')">
               Escoja un refrigerio
+            </mat-error>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Comprobante" formControlName="comprobante">
+            <mat-option *ngFor="let item of comprobantes" [value]="item.id"> {{item.nombre}}
+            </mat-option>
+            <mat-error *ngIf="isFieldInvalid('comprobante')">
+              Escoja un tipo de comprobante
             </mat-error>
           </mat-select>
         </mat-form-field>

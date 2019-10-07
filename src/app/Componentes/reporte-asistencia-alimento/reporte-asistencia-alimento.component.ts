@@ -104,7 +104,7 @@ export class ReporteAsistenciaAlimentoComponent implements OnInit {
   }
 
   PDF() {
-    /*if (this.anio0 !== '' && this.mes0 !== '' && this.idcosto !== 0) {
+    if (this.anio0 !== '' && this.mes0 !== '' && this.idcosto !== 0) {
       if (this.accion === 'turnos') {
         window.open('https://rsgm.online/APICETPasitos/V1/?accion=reportasistencia&aniomes=' +
           this.anio0 + '-' + this.mes0 + '&mesanio=' + this.mes0 + '-' + this.anio0 + '&idcostturn=' + this.idcosto, '_blank');
@@ -114,8 +114,8 @@ export class ReporteAsistenciaAlimentoComponent implements OnInit {
       }
     } else {
       alert('Seleccione todos los campos');
-    }*/
-    if (this.anio0 !== '' && this.mes0 !== '' && this.idcosto !== 0) {
+    }
+    /*if (this.anio0 !== '' && this.mes0 !== '' && this.idcosto !== 0) {
       if (this.accion === 'turnos') {
         window.open('http://127.0.0.1/APICETPasitos/V1/?accion=reportasistencia&aniomes=' +
           this.anio0 + '-' + this.mes0 + '&mesanio=' + this.mes0 + '-' + this.anio0 + '&idcostturn=' + this.idcosto, '_blank');
@@ -125,6 +125,6 @@ export class ReporteAsistenciaAlimentoComponent implements OnInit {
       }
     } else {
       alert('Seleccione todos los campos');
-    }
+    }*/
   }
 }

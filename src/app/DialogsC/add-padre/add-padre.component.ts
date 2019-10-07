@@ -113,8 +113,7 @@ export class AddPadreComponent implements OnInit {
     const estacivil = this.form.get('estacivil').value;
     const tipofamili = this.form.get('tipofamili').value;
     if (dni !== '' && nombres !== '' && apellidos !== '' && direccion !== '' && fechan !== '' && lugnac !== 0
-      && celular !== '' && profesion !== '' && centrotrab !== '' && email !== '' && estacivil !== ''
-      && tipofamili !== '') {
+      && celular !== '' && estacivil !== '' && tipofamili !== '') {
       if (telfijo !== '') {
         telfijo = 0;
       }

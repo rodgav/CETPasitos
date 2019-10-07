@@ -128,17 +128,17 @@ export class ReporteAlimentoExtraComponent implements OnInit {
   }
 
   PDF() {
-    /*if (this.anio0 !== '' && this.mes0 !== '' && this.idcost !== 0) {
+    if (this.anio0 !== '' && this.mes0 !== '' && this.idcost !== 0) {
       window.open('https://rsgm.online/APICETPasitos/V1/?accion=reportealimentoextra&idcosto=' + this.idcost + '&aniomes=' +
         this.anio0 + '-' + this.mes0, '_blank');
     } else {
       alert('Seleccione todos los campos');
-    }*/
-    if (this.anio0 !== '' && this.mes0 !== '' && this.idcost !== 0) {
+    }
+    /*if (this.anio0 !== '' && this.mes0 !== '' && this.idcost !== 0) {
       window.open('http://127.0.0.1/APICETPasitos/V1/?accion=reportealimentoextra&idcosto=' + this.idcost + '&aniomes=' +
         this.anio0 + '-' + this.mes0, '_blank');
     } else {
       alert('Seleccione todos los campos');
-    }
+    }*/
   }
 }

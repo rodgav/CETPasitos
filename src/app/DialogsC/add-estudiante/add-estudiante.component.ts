@@ -5,9 +5,6 @@ import {ConexionService} from '../../Servicios/conexion.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {formatDate} from '@angular/common';
 import {AddPadreComponent} from '../add-padre/add-padre.component';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {CargandoComponent} from '../cargando/cargando.component';
 
 @Component({
   selector: 'app-add-estudiante',
@@ -81,6 +78,9 @@ export class AddEstudianteComponent implements OnInit {
             nombres: estudiantesd[this.keydata][0].nombres,
             apellidos: estudiantesd[this.keydata][0].apellidos,
             direccion: estudiantesd[this.keydata][0].direccion,
+            lugnac: estudiantesd[this.keydata][0].lugnac,
+            establecimiento: estudiantesd[this.keydata][0].estable,
+            religion: estudiantesd[this.keydata][0].religion,
             dni: estudiantesd[this.keydata][0].dni
           });
         });

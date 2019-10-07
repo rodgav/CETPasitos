@@ -50,7 +50,6 @@ export class DetallesMensualidadComponent implements OnInit {
   totalhoraextra = 0.00;
   totalturnoextra = 0.00;
   totalmensualidad = 0.00;
-  totalsindesc = 0.00;
   total = 0.00;
   habilitarpagar: boolean;
   keydatae = 'selidmatri';
@@ -59,6 +58,17 @@ export class DetallesMensualidadComponent implements OnInit {
   now = Date.now();
   keymensa = 'mensaje';
   visible: boolean;
+  subtotalextras = 0.00;
+  subtotalmensualidades = 0.00;
+  subtotaldeudo = 0.00;
+  subtotaldeudo1 = 0.00;
+  totalextras = 0.00;
+  totalmensualidades = 0.00;
+  hablitardescuentomensu: string;
+  hablitardescuentoextra: string;
+  pagado = 0.00;
+  deudo = 0.00;
+  montoapagar = 0.00;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<DetallesMensualidadComponent>,
@@ -79,17 +89,14 @@ export class DetallesMensualidadComponent implements OnInit {
       codmatri: ['', Validators.required]
     });
     this.form1 = this.fb.group({
-      descuento: ['', Validators.required]
+      descuentomensualidad: ['', Validators.required],
+      descuentoextras: ['', Validators.required],
+      montoapagar: ['', Validators.required]
     });
     this.form.patchValue({codigo: this.idest});
+    this.form1.patchValue({montoapagar: 0.00});
     if (this.accion === 'detalles') {
       this.form.get('codigo').disable();
-      if (this.estado === 'PAGADO') {
-        this.form1.get('descuento').disable();
-        this.visible = false;
-      } else {
-        this.visible = true;
-      }
       this.Controlar(this.idest);
     } else {
       this.visible = true;
@@ -117,7 +124,8 @@ export class DetallesMensualidadComponent implements OnInit {
             this.LlenarMensualidad(idmatri);
             this.LlenarMensualidadA(idmatri);
             this.LlenarMensualidadR(idmatri);
-            this.LlenarDescuento(idmatri);
+            this.LlenarDescuentoMensualidad(idmatri, '1');
+            this.LlenarDescuentoExtras(idmatri, '2');
           } else {
             this.form.patchValue({
               nombres: ['NO ENCONTRADO'],
@@ -129,7 +137,6 @@ export class DetallesMensualidadComponent implements OnInit {
             this.totalhoraextra = 0.00;
             this.totalturnoextra = 0.00;
             this.totalmensualidad = 0.00;
-            this.totalsindesc = 0.00;
             this.total = 0.00;
             this.form1.patchValue({
               descuento: 0.00
@@ -266,7 +273,7 @@ export class DetallesMensualidadComponent implements OnInit {
       suma = +suma + +row.total;
     }
     this.totalturnoextra = suma;
-    this.Total();
+    this.TotalExtras();
   }
 
   private TotalMensualidad() {
@@ -275,7 +282,7 @@ export class DetallesMensualidadComponent implements OnInit {
       suma = +suma + +row.total;
     }
     this.totalmensualidad = suma;
-    this.Total();
+    this.TotalMensualidades();
   }
 
   private TotalHoraExtra() {
@@ -284,7 +291,7 @@ export class DetallesMensualidadComponent implements OnInit {
       suma = +suma + +row.total;
     }
     this.totalhoraextra = suma;
-    this.Total();
+    this.TotalExtras();
   }
 
   private TotalAlimentosExtra() {
@@ -293,7 +300,7 @@ export class DetallesMensualidadComponent implements OnInit {
       suma = +suma + +row.total;
     }
     this.totalalimentosextra = suma;
-    this.Total();
+    this.TotalExtras();
   }
 
   private TotalMensualidadA() {
@@ -302,7 +309,7 @@ export class DetallesMensualidadComponent implements OnInit {
       suma = +suma + +row.total;
     }
     this.totalmensualidada = suma;
-    this.Total();
+    this.TotalMensualidades();
   }
 
   private TotalMensualidadR() {
@@ -311,44 +318,120 @@ export class DetallesMensualidadComponent implements OnInit {
       suma = +suma + +row.total;
     }
     this.totalmensualidadr = suma;
+    this.TotalMensualidades();
+  }
+
+  private TotalMensualidades() {
+    this.subtotalmensualidades = +this.totalmensualidadr +
+      +this.totalmensualidada +
+      +this.totalmensualidad;
+  }
+
+  private TotalExtras() {
+    this.subtotalextras =
+      +this.totalalimentosextra +
+      +this.totalhoraextra +
+      +this.totalturnoextra;
+  }
+
+  DescontarMensualidades(value: number) {
+    this.totalmensualidades = this.subtotalmensualidades - value;
+    this.deudo = this.subtotaldeudo - value;
+    this.Total();
+  }
+
+  DescontarExtras(value: number) {
+    this.totalextras = this.subtotalextras - value;
+    this.deudo = this.subtotaldeudo - value;
+    this.Total();
+  }
+
+  CalcularDeuda(value: any) {
+    this.montoapagar = value;
+    this.deudo = this.subtotaldeudo - value;
     this.Total();
   }
 
   private Total() {
-    this.totalsindesc = +this.totalmensualidadr +
-      +this.totalmensualidada +
-      +this.totalalimentosextra +
-      +this.totalhoraextra +
-      +this.totalturnoextra +
-      +this.totalmensualidad;
+    this.total = this.totalextras + this.totalmensualidades;
   }
 
-  Descontar(value: any) {
-    this.total = this.totalsindesc - value;
-  }
-
-  private LlenarDescuento(idmatri: any) {
+  private LlenarDescuentoMensualidad(idmatri: any, tipo: string) {
     const formData = new FormData();
     const keyd = 'seldesc';
     formData.append('accion', keyd);
     formData.append('idmatri', idmatri.toString());
     formData.append('aniomes', this.aniomes);
+    formData.append('tipo', tipo);
     this.conexion.servicio(formData).subscribe(
       desc => {
         Object.keys(desc).map(() => {
           if (desc[this.keyerror] === false) {
             this.form1.patchValue({
-              descuento: desc[keyd][0].descuento
+              descuentomensualidad: desc[keyd][0].descuento
             });
-            if (desc[keyd][0].estado === 'PAGADO') {
-              this.visible = false;
-              this.habilitarpagar = desc[keyd][0].estado === 'PAGADO';
-            }
-            this.Descontar(desc[keyd][0].descuento);
+            this.hablitardescuentomensu = desc[keyd][0].estado;
+            this.DescontarMensualidades(desc[keyd][0].descuento);
+            this.HabilitarDeshabilitar();
           }
         });
       }
     );
+  }
+
+  private LlenarDescuentoExtras(idmatri: any, tipo: string) {
+    const formData = new FormData();
+    const keyd = 'seldesc';
+    formData.append('accion', keyd);
+    formData.append('idmatri', idmatri.toString());
+    formData.append('aniomes', this.aniomes);
+    formData.append('tipo', tipo);
+    this.conexion.servicio(formData).subscribe(
+      desc => {
+        Object.keys(desc).map(() => {
+          if (desc[this.keyerror] === false) {
+            this.form1.patchValue({
+              descuentoextras: desc[keyd][0].descuento
+            });
+            this.hablitardescuentoextra = desc[keyd][0].estado;
+            this.DescontarExtras(desc[keyd][0].descuento);
+            this.HabilitarDeshabilitar();
+          }
+        });
+      }
+    );
+  }
+
+  private HabilitarDeshabilitar() {
+    if (this.hablitardescuentomensu === 'PAGADO' && this.hablitardescuentoextra === 'PAGADO') {
+      this.visible = false;
+      this.habilitarpagar = true;
+      this.form1.get('descuentomensualidad').disable();
+      this.form1.get('descuentoextras').disable();
+      this.pagado = this.totalextras + this.totalmensualidades;
+      this.deudo = 0;
+      this.subtotaldeudo = 0;
+    } else if (this.hablitardescuentomensu === 'PAGADO' && this.hablitardescuentoextra === 'DEUDO') {
+      this.form1.get('descuentomensualidad').disable();
+      this.visible = true;
+      this.habilitarpagar = false;
+      this.deudo = this.totalextras;
+      this.subtotaldeudo = this.totalextras;
+      this.pagado = this.totalmensualidades;
+    } else if (this.hablitardescuentomensu === 'DEUDO' && this.hablitardescuentoextra === 'PAGADO') {
+      this.form1.get('descuentoextras').disable();
+      this.visible = true;
+      this.habilitarpagar = false;
+      this.pagado = this.totalextras;
+      this.deudo = this.totalmensualidades;
+      this.subtotaldeudo = this.totalmensualidades;
+    } else {
+      this.visible = true;
+      this.habilitarpagar = false;
+      this.deudo = this.totalextras + this.totalmensualidades;
+      this.subtotaldeudo = this.totalextras + this.totalmensualidades;
+      this.pagado = 0;
+    }
   }
 
   Pagar() {
@@ -360,34 +443,101 @@ export class DetallesMensualidadComponent implements OnInit {
         const pago = 1;
         const aniomes = formatDate(this.now, 'yyyy-MM', 'en-US', '-0500');
         const fecha = formatDate(this.now, 'yyyy-MM-dd', 'en-US', '-0500');
-        const desc = this.form1.get('descuento').value;
-        const totalm =
-          +this.totalmensualidadr +
-          +this.totalmensualidada +
-          +this.totalmensualidad;
-        const totala =
-          +this.totalalimentosextra +
-          +this.totalhoraextra +
+        const descm = this.form1.get('descuentomensualidad').value;
+        const desce = this.form1.get('descuentoextras').value;
+        const totalmensualidad = this.totalmensualidad;
+        const totalmensualimen = +this.totalmensualidadr +
+          +this.totalmensualidada;
+        const totalextrasm = this.totalhoraextra +
           +this.totalturnoextra;
-        const total = (totalm + +totala) - desc;
+        const totalextrasa = this.totalalimentosextra;
+        const totalmensualidades = ((totalmensualidad + +totalmensualimen) - descm);
+        const totalextras = ((totalextrasm + +totalextrasa) - desce);
+        const montoapagar = parseFloat(this.form1.get('montoapagar').value);
         const formData = new FormData();
-        const keypagar = 'pagarmen';
-        formData.append('accion', keypagar);
         formData.append('usu', usu);
         formData.append('pago', pago.toString());
         formData.append('idmatri', idmatri);
         formData.append('fecha', fecha);
         formData.append('aniomes', aniomes);
-        formData.append('totalm', totalm.toString());
-        formData.append('totala', totala.toString());
-        formData.append('desc', desc);
-        formData.append('total', total.toString());
+        let deudam = 0.00;
+        let pagom = 0.00;
+        let deudae = 0.00;
+        let pagoe = 0.00;
+        let pago1 = 0.00;
+        if (montoapagar >= totalextras) {
+          deudae = 0.00;
+          pagoe = totalextras;
+          pago1 = montoapagar - totalextras;
+        } else {
+          deudae = totalextras - montoapagar;
+          pagoe = montoapagar;
+          pago1 = 0.00;
+        }
+        if (pago1 <= totalmensualidades) {
+          deudam = totalmensualidades - pago1;
+          pagom = pago1;
+        }
+        if (this.hablitardescuentomensu === 'PAGADO' && this.hablitardescuentoextra === 'DEUDO') {
+          formData.append('accion', 'pagarmensualidad');
+          formData.append('totalm', totalextrasm.toString());
+          formData.append('totala', totalextrasa.toString());
+          formData.append('desc', desce);
+          formData.append('total', totalextras.toString());
+          formData.append('tipo', '2');
+          if (this.form1.get('montoapagar').value === 0) {
+            formData.append('pagado', totalextras.toString());
+            formData.append('deuda', '0');
+          } else {
+            formData.append('pagado', pagoe.toString());
+            formData.append('deuda', deudae.toString());
+          }
+        } else if (this.hablitardescuentomensu === 'DEUDO' && this.hablitardescuentoextra === 'PAGADO') {
+          formData.append('accion', 'pagarmensualidad');
+          formData.append('totalm', totalmensualidad.toString());
+          formData.append('totala', totalmensualimen.toString());
+          formData.append('desc', descm);
+          formData.append('total', totalmensualidades.toString());
+          formData.append('tipo', '1');
+          if (this.form1.get('montoapagar').value === 0) {
+            formData.append('pagado', totalmensualidades.toString());
+            formData.append('deuda', '0');
+          } else {
+            formData.append('pagado', pagom.toString());
+            formData.append('deuda', deudam.toString());
+          }
+        } else {
+          formData.append('accion', 'pagarmensualidadextras');
+          formData.append('totalmensum', totalmensualidad.toString());
+          formData.append('totalmensua', totalmensualimen.toString());
+          formData.append('descm', descm);
+          formData.append('totalm', totalmensualidades.toString());
+          formData.append('tipom', '1');
+          formData.append('totalextrasm', totalextrasm.toString());
+          formData.append('totalextrasa', totalextrasa.toString());
+          formData.append('desce', desce);
+          formData.append('totale', totalextras.toString());
+          formData.append('tipoe', '2');
+          if (this.form1.get('montoapagar').value === 0) {
+            formData.append('pagom', totalmensualidades.toString());
+            formData.append('pagoe', totalextras.toString());
+            formData.append('deudae', '0');
+            formData.append('deudam', '0');
+          } else {
+            formData.append('pagom', pagom.toString());
+            formData.append('pagoe', pagoe.toString());
+            formData.append('deudae', deudae.toString());
+            formData.append('deudam', deudam.toString());
+          }
+        }
         this.conexion.servicio(formData).subscribe(
           respuesta => {
             Object.keys(respuesta).map(() => {
               if (respuesta[this.keyerror] === false) {
                 // this.dialogRef.close(respuesta[this.keymens]);
                 this.dialogRef.close(respuesta[this.keymensa]);
+              } else {
+                alert(respuesta[this.keymensa]);
               }
             });
           }

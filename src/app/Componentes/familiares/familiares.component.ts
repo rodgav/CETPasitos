@@ -15,9 +15,11 @@ export class FamiliaresComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
     this.dataSource.paginator = paginacion;
   }
+
   @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
     this.dataSource.sort = sort;
   }
+
   dataSource = new MatTableDataSource<Familiares>();
   familiares: Familiares[];
   columnas = ['dni', 'apellidos', 'nombres', 'celular'
@@ -55,11 +57,11 @@ export class FamiliaresComponent implements OnInit {
     );
   }
 
-  Editar(dni: any, apellidos: any, nombres: any, celular: any) {
+  Editar(dni: any, apellidos: any, nombres: any, celular: any, familiar: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = {dni, apellidos, nombres, celular};
+    dialogConfig.data = {dni, apellidos, nombres, celular, familiar};
     dialogConfig.width = '600px';
     // dialogConfig.maxWidth = '100vw !important';
     // dialogConfig.maxHeight = '100vw !important';

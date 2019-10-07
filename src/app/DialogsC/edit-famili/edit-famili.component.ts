@@ -14,10 +14,9 @@ export class EditFamiliComponent implements OnInit {
   dni = 0;
   apellidos = '';
   nombres = '';
+  familiar = '';
   celular = 0;
-  familiar: Tipos[];
   keymens = 'mensaje';
-  keydataf = 'tipofamili';
   keyerror = 'error';
   private formSubmitAttempt: boolean;
 
@@ -28,6 +27,7 @@ export class EditFamiliComponent implements OnInit {
     this.dni = data.dni;
     this.apellidos = data.apellidos;
     this.nombres = data.nombres;
+    this.familiar = data.familiar;
     this.celular = data.celular;
   }
 
@@ -39,14 +39,15 @@ export class EditFamiliComponent implements OnInit {
       celular: ['', Validators.required],
       tipofamili: ['', Validators.required]
     });
-    this.form.get('dni').disable();
+    this.form.get('nombres').disable();
+    this.form.get('apellidos').disable();
     this.form.patchValue({
       dni: this.dni,
       nombres: this.nombres,
       apellidos: this.apellidos,
-      celular: this.celular
+      celular: this.celular,
+      familiar: this.familiar
     });
-    this.LlenarTipoFamili();
   }
 
   isFieldInvalid(field: string) {
@@ -70,20 +71,6 @@ export class EditFamiliComponent implements OnInit {
           if (respuesta[this.keyerror] === false) {
             this.dialogRef.close(respuesta[this.keymens]);
           }
-          // console.log(key);
-          // console.log(usuario[key]);
-        });
-      }
-    );
-  }
-
-  private LlenarTipoFamili() {
-    const formData = new FormData();
-    formData.append('accion', this.keydataf);
-    this.conexion.servicio(formData).subscribe(
-      tipofami => {
-        Object.keys(tipofami).map(() => {
-          this.familiar = tipofami[this.keydataf];
           // console.log(key);
           // console.log(usuario[key]);
         });

@@ -9,6 +9,8 @@ import {FooterComponent} from './Componentes/footer/footer.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {
+  DateAdapter,
+  MAT_DATE_FORMATS, MAT_DATE_LOCALE,
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
@@ -75,13 +77,26 @@ import {CostoMensuTurnoComponent} from './Componentes/costo-mensu-turno/costo-me
 import {CostoMensuAlimenComponent} from './Componentes/costo-mensu-alimen/costo-mensu-alimen.component';
 import {AddTurnoComponent} from './DialogsC/add-turno/add-turno.component';
 import {AddAlimentoComponent} from './DialogsC/add-alimento/add-alimento.component';
-import { CostoMatriculaComponent } from './Componentes/costo-matricula/costo-matricula.component';
-import { TurnosCComponent } from './Componentes/turnos-c/turnos-c.component';
-import { AlimentosCComponent } from './Componentes/alimentos-c/alimentos-c.component';
-import { ReporteAsistenciaAlimentoComponent } from './Componentes/reporte-asistencia-alimento/reporte-asistencia-alimento.component';
-import { ReporteTurnoExtraComponent } from './Componentes/reporte-turno-extra/reporte-turno-extra.component';
-import { ReporteHoraExtraComponent } from './Componentes/reporte-hora-extra/reporte-hora-extra.component';
-import { ReporteAlimentoExtraComponent } from './Componentes/reporte-alimento-extra/reporte-alimento-extra.component';
+import {CostoMatriculaComponent} from './Componentes/costo-matricula/costo-matricula.component';
+import {TurnosCComponent} from './Componentes/turnos-c/turnos-c.component';
+import {AlimentosCComponent} from './Componentes/alimentos-c/alimentos-c.component';
+import {ReporteAsistenciaAlimentoComponent} from './Componentes/reporte-asistencia-alimento/reporte-asistencia-alimento.component';
+import {ReporteTurnoExtraComponent} from './Componentes/reporte-turno-extra/reporte-turno-extra.component';
+import {ReporteHoraExtraComponent} from './Componentes/reporte-hora-extra/reporte-hora-extra.component';
+import {ReporteAlimentoExtraComponent} from './Componentes/reporte-alimento-extra/reporte-alimento-extra.component';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -187,7 +202,10 @@ import { ReporteAlimentoExtraComponent } from './Componentes/reporte-alimento-ex
   providers: [
     CargaService,
     {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
-    {provide: LocationStrategy, useClass: HashLocationStrategy}],
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: MAT_DATE_LOCALE, useValue: 'es'},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}],
   bootstrap: [AppComponent],
   entryComponents: [DetallesEstudianteComponent, DetallesPadreComponent, ActuaEstadEstudiComponent,
     AddUsuarioComponent, AddEstudianteComponent, EliminarComponent,

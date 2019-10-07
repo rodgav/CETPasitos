@@ -16,17 +16,13 @@ export class EditPadreComponent implements OnInit {
   form: FormGroup;
   private formSubmitAttempt: boolean;
   dni = 0;
-  idl = 0;
   keymens = 'mensaje';
-  keydatal = 'lugnacimiento';
   keydatae = 'estacivil';
-  keydataf = 'tipofamili';
+  keydataf = 'tipopadres';
   keydata = 'detallpadre';
   keyerror = 'error';
-  lugnac: Tipos[];
   estadoscivil: Tipos[];
   familiar: Tipos[];
-  lugnacfilter: Observable<any[]>;
 
   constructor(private conexion: ConexionService,
               private fb: FormBuilder,
@@ -55,7 +51,6 @@ export class EditPadreComponent implements OnInit {
     this.form.patchValue(
       {dni: this.dni}
     );
-    this.LLenarLugNac();
     this.LlenarEstaCivi();
     this.LlenarTipoFamili();
     this.LlenarDetallPadre();
@@ -65,23 +60,6 @@ export class EditPadreComponent implements OnInit {
     return (
       (!this.form.get(field).valid && this.form.get(field).touched) ||
       (this.form.get(field).untouched && this.formSubmitAttempt)
-    );
-  }
-
-  private LLenarLugNac() {
-    const formData = new FormData();
-    formData.append('accion', this.keydatal);
-    this.conexion.servicio(formData).subscribe(
-      lugnac => {
-        Object.keys(lugnac).map(() => {
-          this.lugnac = lugnac[this.keydatal];
-          this.lugnacfilter = this.form.get('lugnac').valueChanges
-            .pipe(
-              startWith(''),
-              map(value => this._filter(value))
-            );
-        });
-      }
     );
   }
 
@@ -113,15 +91,6 @@ export class EditPadreComponent implements OnInit {
     );
   }
 
-  private _filter(value: string): any[] {
-    return this.lugnac.filter(item => item.nombre.toLowerCase().indexOf(value.toLowerCase()) === 0);
-  }
-
-  Seleccionado(idl: number) {
-    // console.log(id + ' ' + precio);
-    this.idl = idl;
-  }
-
   AgregarPadre() {
     const formData = new FormData();
     const fechan = formatDate(this.form.get('fechan').value, 'yyyy-MM-dd', 'en-US', '-0500');
@@ -131,7 +100,7 @@ export class EditPadreComponent implements OnInit {
     formData.append('apellidos', this.form.get('apellidos').value);
     formData.append('direccion', this.form.get('direccion').value);
     formData.append('fechan', fechan);
-    formData.append('lugnac', this.idl.toString());
+    formData.append('lugnac', this.form.get('lugnac').value);
     formData.append('celular', this.form.get('celular').value);
     formData.append('telfijo', this.form.get('telfijo').value);
     formData.append('profesion', this.form.get('profesion').value);
@@ -168,6 +137,7 @@ export class EditPadreComponent implements OnInit {
             profesion: padresd[this.keydata][0].profesion,
             centrotrab: padresd[this.keydata][0].centrotrab,
             email: padresd[this.keydata][0].email,
+            lugnac: padresd[this.keydata][0].lugnac,
           });
         });
       }

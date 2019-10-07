@@ -64,9 +64,9 @@ export class CumpleaniosComponent implements OnInit {
   }
 
   PDF() {
-    /* window.open('https://rsgm.online/APICETPasitos/V1/?accion=reportecumpleanios&tipo=' +
-       this.tipo + '&mes=' + this.mes, '_blank');*/
-    window.open('http://127.0.0.1/APICETPasitos/V1/?accion=reportecumpleanios&tipo=' +
-      this.tipo + '&mes=' + this.mes, '_blank');
+     window.open('https://rsgm.online/APICETPasitos/V1/?accion=reportecumpleanios&tipo=' +
+       this.tipo + '&mes=' + this.mes, '_blank');
+   /* window.open('http://127.0.0.1/APICETPasitos/V1/?accion=reportecumpleanios&tipo=' +
+      this.tipo + '&mes=' + this.mes, '_blank');*/
   }
 }

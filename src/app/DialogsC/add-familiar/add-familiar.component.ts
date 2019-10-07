@@ -12,7 +12,6 @@ class ListaFamiliares {
     public nombres: string,
     public apellidos: string,
     public celular: number,
-    public  idfamilia: number,
     public nombref: string
   ) {
   }
@@ -34,12 +33,8 @@ export class AddFamiliarComponent implements OnInit {
   familiares: ListaFamiliares[] = [];
   mensaje: string;
   dnie = 0;
-  familiar: Tipos[];
   keymens = 'mensaje';
-  keydataf = 'tipofamili';
   keyerror = 'error';
-  nombref: string;
-  tipofamili = 0;
 
   constructor(private conexion: ConexionService,
               private fb: FormBuilder,
@@ -61,7 +56,6 @@ export class AddFamiliarComponent implements OnInit {
       debounceTime(5000)
     ).subscribe(() => this.mensaje = null);
 
-    this.LlenarTipoFamili();
   }
 
   isFieldInvalid(field: string) {
@@ -72,16 +66,23 @@ export class AddFamiliarComponent implements OnInit {
   }
 
   AgregarFamiliar() {
-    const dni = this.form.get('dni').value;
+    let dni;
+    let celular;
+    dni = this.form.get('dni').value;
+    if (dni === '') {
+      dni = 'no asig';
+    }
     const nombres = this.form.get('nombres').value;
     const apellidos = this.form.get('apellidos').value;
-    const celular = this.form.get('celular').value;
-    const tipofamili = this.tipofamili;
-    if (dni !== '' && nombres !== '' && apellidos !== ''
-      && celular !== '' && tipofamili !== 0) {
-      if (!(this.familiares.some(x => x.dni === dni))) {
+    celular = this.form.get('celular').value;
+    if (celular === '') {
+      celular = 1;
+    }
+    const nombref = this.form.get('tipofamili').value;
+    if (nombres !== '' && apellidos !== '' && nombref !== '') {
+      if (!(this.familiares.some(x => x.nombres === nombres)) && !(this.familiares.some(x => x.apellidos === apellidos))) {
         this.familiares.push(new ListaFamiliares(dni, nombres, apellidos, celular,
-          tipofamili, this.nombref));
+          nombref));
         this.dataSource.data = this.familiares as ListaFamiliares[];
         this.form.patchValue({
           dni: '',
@@ -96,26 +97,6 @@ export class AddFamiliarComponent implements OnInit {
     } else {
       this.success.next('Rellene el formulario');
     }
-  }
-
-
-  SelecTipFam($event: MatSelectChange) {
-    this.nombref = $event.value.nombre;
-    this.tipofamili = $event.value.id;
-  }
-
-  private LlenarTipoFamili() {
-    const formData = new FormData();
-    formData.append('accion', this.keydataf);
-    this.conexion.servicio(formData).subscribe(
-      tipofami => {
-        Object.keys(tipofami).map(() => {
-          this.familiar = tipofami[this.keydataf];
-          // console.log(key);
-          // console.log(usuario[key]);
-        });
-      }
-    );
   }
 
   EliminarFamiliar(row: any) {
@@ -139,7 +120,7 @@ export class AddFamiliarComponent implements OnInit {
       this.array.push(row.nombres);
       this.array.push(row.apellidos);
       this.array.push((row.celular).toString());
-      this.array.push((row.idfamilia).toString());
+      this.array.push((row.nombref).toString());
     }
     // console.log(this.array);
     formData.append('array', this.array.toString());

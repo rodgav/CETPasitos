@@ -45,7 +45,7 @@
     </ng-container>
 
     <ng-container matColumnDef="familiar">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>TIPO</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>PARENTESCO</mat-header-cell>
       <mat-cell *matCellDef="let row">
         <span class="mobile-label">TIPO</span>
         {{row.familiar}}</mat-cell>
@@ -62,7 +62,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>EDITAR</mat-header-cell>
       <mat-cell *matCellDef="let row">
         <span class="mobile-label">EDITAR</span>
-        <button mat-icon-button color="primary" (click)="Editar(row.dni,row.apellidos,row.nombres,row.celular)">
+        <button mat-icon-button color="primary" (click)="Editar(row.dni,row.apellidos,row.nombres,row.celular, row.familiar)">
           <i class="fa fa-edit"></i>
         </button>
       </mat-cell>

@@ -8,6 +8,7 @@ import {AsignarEstudianteComponent} from '../../DialogsC/asignar-estudiante/asig
 import {AddEstudianteComponent} from '../../DialogsC/add-estudiante/add-estudiante.component';
 import {AddPadreComponent} from '../../DialogsC/add-padre/add-padre.component';
 import {AddFamiliarComponent} from '../../DialogsC/add-familiar/add-familiar.component';
+import {AddMatriculaComponent} from '../../DialogsC/add-matricula/add-matricula.component';
 
 @Component({
   selector: 'app-estudiantes',
@@ -18,13 +19,15 @@ export class EstudiantesComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) set content1(paginacion: MatPaginator) {
     this.dataSource.paginator = paginacion;
   }
+
   @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
     this.dataSource.sort = sort;
   }
+
   dataSource = new MatTableDataSource<Estudiantes>();
   estudiantes: Estudiantes[];
   columnas = ['id', 'apellidos', 'nombres', 'dni', 'fechan', 'edad',
-    'establecimiento', 'religion', 'estado', 'detalles', 'activo', 'asignar', 'editar'];
+    'establecimiento', 'religion', 'estado', 'detalles', 'activo', 'asignar', 'editar', 'matricular'];
   keydata = 'estudiantes';
   keymens = 'mensaje';
   keyerro = 'error';
@@ -136,6 +139,22 @@ export class EstudiantesComponent implements OnInit {
     // dialogConfig.height = '1000px';
     dialogConfig.hasBackdrop = true;
     const dialogRef = this.dialog.open(AddEstudianteComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      alert(result);
+      this.LlenarEstudiantes();
+      // console.log(result);
+    });
+  }
+
+  Matricular(dni: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {dni};
+    dialogConfig.width = '800px';
+    // dialogConfig.height = '600px';
+    dialogConfig.hasBackdrop = true;
+    const dialogRef = this.dialog.open(AddMatriculaComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       alert(result);
       this.LlenarEstudiantes();

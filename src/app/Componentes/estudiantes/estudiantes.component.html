@@ -127,6 +127,16 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="matricular">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>MATRICULAR</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">MATRICULAR</span>
+        <button mat-icon-button color="primary" (click)="Matricular(row.dni)">
+          <i class="fa fa-plus-square"></i>
+        </button>
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
     <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
   </mat-table>

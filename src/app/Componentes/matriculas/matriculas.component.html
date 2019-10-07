@@ -6,7 +6,7 @@
   <mat-divider [inset]="true"></mat-divider>
   <div class="divbar">
     <mat-form-field>
-      <mat-select placeholder="Año" formControlName="anio" (selectionChange)="SeleccionarAnios($event)">
+      <mat-select placeholder="Año" (selectionChange)="SeleccionarAnios($event)">
         <mat-option *ngFor="let item of anios" [value]="item.nombre"> {{item.nombre}}
         </mat-option>
       </mat-select>

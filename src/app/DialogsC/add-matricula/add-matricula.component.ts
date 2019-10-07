@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {formatDate} from '@angular/common';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ConexionService} from '../../Servicios/conexion.service';
-import {MatDialogConfig, MatDialogRef, MatSelectChange} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef, MatSelectChange} from '@angular/material';
 import {Tipos} from '../../Data/Tipos';
 import {AddPadreComponent} from '../add-padre/add-padre.component';
 import {TiposT} from '../../Data/TiposT';
 import {Turnos} from '../../Data/Turnos';
 import {UsuarioService} from '../../Servicios/usuario.service';
+
 
 @Component({
   selector: 'app-add-matricula',
@@ -22,6 +23,7 @@ export class AddMatriculaComponent implements OnInit {
   almuerzos: TiposT[];
   refrigerios: TiposT[];
   anios: Tipos[];
+  comprobantes: Tipos[];
   keydatae = 'selest';
   keyerror = 'error';
   keymensa = 'mensaje';
@@ -29,6 +31,7 @@ export class AddMatriculaComponent implements OnInit {
   keydataa = 'selmaxanios';
   keydataal = 'almuerzos';
   keydatar = 'refrigerios';
+  keydatac = 'comprobantes';
   totalme1 = 0;
   totalma1 = 0;
   totala = 0;
@@ -40,15 +43,18 @@ export class AddMatriculaComponent implements OnInit {
   fecha = new Date();
   sumasinmatricula = 0;
   restasinmatricula = 0;
+  dni = '';
 
   constructor(private conexion: ConexionService,
               public dialogRef: MatDialogRef<AddMatriculaComponent>,
               private fb: FormBuilder,
-              private usuarioservicio: UsuarioService) {
+              private usuarioservicio: UsuarioService,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.dni = data.dni;
   }
 
   ngOnInit() {
-    const fecha = formatDate(this.now, 'MM/dd/yyyy', 'en-US', '-0500');
+    const fecha = formatDate(this.now, 'dd/MM/yyyy', 'en-US', '-0500');
     this.form = this.fb.group({
       codigo: ['', Validators.required],
       nombres: ['', Validators.required],
@@ -59,6 +65,7 @@ export class AddMatriculaComponent implements OnInit {
       refrigerio: ['', Validators.required],
       almuerzo: ['', Validators.required],
       anio: ['', Validators.required],
+      comprobante: ['', Validators.required],
       boleta: ['', Validators.required],
       totala: ['', Validators.required],
       totalr: ['', Validators.required],
@@ -76,13 +83,19 @@ export class AddMatriculaComponent implements OnInit {
     this.form.get('totalme').disable();
     this.form.get('total').disable();
     this.form.patchValue({
+      codigo: this.dni,
       fechains: fecha,
       descuento: 0
     });
+    if (this.dni !== undefined) {
+      this.Controlar(this.dni);
+      this.form.get('codigo').disable();
+    }
     this.LlenarTurnos();
     this.LLenarRefrigerios();
     this.LlenarAlmuerzos();
     this.LlenarAnios();
+    this.LlenarComprobantes();
   }
 
   isFieldInvalid(field: string) {
@@ -95,8 +108,9 @@ export class AddMatriculaComponent implements OnInit {
   AgregarMatricula() {
     const formData = new FormData();
     const aniomes = formatDate(this.fecha, 'yyyy-MM', 'en-US', '-0500');
-    const fechaini = formatDate(this.form.get('fechaini').value, 'yyyy-MM-dd', 'en-US', '-0500');
-    const fechains = formatDate(this.form.get('fechains').value, 'yyyy-MM-dd', 'en-US', '-0500');
+    const fechaini0 = new Date(this.form.get('fechaini').value);
+    const fechaini = formatDate(fechaini0, 'yyyy-MM-dd', 'en-US', '-0500');
+    const fechains = formatDate(this.fecha, 'yyyy-MM-dd', 'en-US', '-0500');
     const usu = this.usuarioservicio.getUsuarioLogeadoen()[0].usu;
     formData.append('accion', 'addmatri');
     formData.append('fechains', fechains);
@@ -106,8 +120,13 @@ export class AddMatriculaComponent implements OnInit {
     formData.append('idrefri', this.idrefri.toString());
     formData.append('estudiante', this.form.get('codigo').value);
     formData.append('anio', this.form.get('anio').value);
+    formData.append('comprobante', this.form.get('comprobante').value);
     formData.append('boleta', this.form.get('boleta').value);
-    formData.append('total', this.restasinmatricula.toString());
+    if (this.form.get('descuento').value !== 0) {
+      formData.append('total', this.restasinmatricula.toString());
+    } else {
+      formData.append('total', this.sumasinmatricula.toString());
+    }
     formData.append('totalma', this.form.get('totalma').value);
     formData.append('totalme', this.form.get('totalme').value);
     formData.append('totala', this.form.get('totala').value);
@@ -133,8 +152,7 @@ export class AddMatriculaComponent implements OnInit {
     this.dialogRef.close('Cancelado');
   }
 
-  Controlar(event: any) {
-    const value = event.target.value;
+  Controlar(value: any) {
     const formData = new FormData();
     formData.append('accion', this.keydatae);
     formData.append('id', value);
@@ -213,6 +231,21 @@ export class AddMatriculaComponent implements OnInit {
     );
   }
 
+  private LlenarComprobantes() {
+    const formData = new FormData();
+    formData.append('accion', this.keydatac);
+    this.conexion.servicio(formData).subscribe(
+      comprobantes => {
+        console.log(comprobantes[this.keydatac]);
+        Object.keys(comprobantes).map(() => {
+          this.comprobantes = comprobantes[this.keydatac];
+          // console.log(key);
+          // console.log(usuario[key]);
+        });
+      }
+    );
+  }
+
   Descontar(event: any) {
     const desc = event.target.value;
     const resta = this.suma - desc;
@@ -223,7 +256,7 @@ export class AddMatriculaComponent implements OnInit {
   private Sumar() {
     this.suma = +this.totala + +this.totalr + +this.totalma1 + +this.totalme1;
     this.sumasinmatricula = +this.totala + +this.totalr + +this.totalme1;
-    this.form.patchValue({total: this.suma});
+    this.form.patchValue({total: this.suma, descuento: 0});
   }
 
 

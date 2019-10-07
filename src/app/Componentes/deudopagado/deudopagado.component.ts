@@ -142,19 +142,19 @@ export class DeudopagadoComponent implements OnInit {
   }
 
   PDF() {
-    if (this.accion === 'morosos') {
+    /*if (this.accion === 'morosos') {
       window.open('http://127.0.0.1/APICETPasitos/V1/?accion=reportemorosos&aniomes=' + this.aniomes
         + '&tipo=' + this.tipo, '_blank');
     } else {
       window.open('http://127.0.0.1/APICETPasitos/V1/?accion=reportepagados&aniomes=' + this.aniomes
         + '&tipo=' + this.tipo, '_blank');
-    }
-    /*if (this.accion === 'morosos') {
+    }*/
+    if (this.accion === 'morosos') {
       window.open('https://rsgm.online/APICETPasitos/V1/?accion=reportemorosos&aniomes=' + this.aniomes
         + '&tipo=' + this.tipo, '_blank');
     } else {
       window.open('https://rsgm.online/APICETPasitos/V1/?accion=reportepagados&aniomes=' + this.aniomes
         + '&tipo=' + this.tipo, '_blank');
-    }*/
+    }
   }
 }

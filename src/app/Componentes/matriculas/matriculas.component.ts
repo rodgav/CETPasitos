@@ -104,7 +104,7 @@ export class MatriculasComponent implements OnInit {
   }
 
   PDF(id: any) {
-    // window.open('https://rsgm.online/APICETPasitos/V1/?accion=fichamatricula&id=' + id, '_blank');
-    window.open('http://127.0.0.1/APICETPasitos/V1/?accion=fichamatricula&id=' + id, '_blank');
+    window.open('https://rsgm.online/APICETPasitos/V1/?accion=fichamatricula&id=' + id, '_blank');
+    // window.open('http://127.0.0.1/APICETPasitos/V1/?accion=fichamatricula&id=' + id, '_blank');
   }
 }
