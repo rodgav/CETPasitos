@@ -85,6 +85,7 @@ import {ReporteTurnoExtraComponent} from './Componentes/reporte-turno-extra/repo
 import {ReporteHoraExtraComponent} from './Componentes/reporte-hora-extra/reporte-hora-extra.component';
 import {ReporteAlimentoExtraComponent} from './Componentes/reporte-alimento-extra/reporte-alimento-extra.component';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {PagarComponent} from './DialogsC/pagar/pagar.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -149,7 +150,8 @@ export const MY_FORMATS = {
     ReporteAsistenciaAlimentoComponent,
     ReporteTurnoExtraComponent,
     ReporteHoraExtraComponent,
-    ReporteAlimentoExtraComponent
+    ReporteAlimentoExtraComponent,
+    PagarComponent
   ],
   imports: [
     BrowserModule,
@@ -212,7 +214,7 @@ export const MY_FORMATS = {
     AsignarEstudianteComponent, AddPadreComponent, AddFamiliarComponent, EditPadreComponent,
     EditFamiliComponent, CargandoComponent, AddMatriculaComponent, DetallesMensualidadComponent,
     AsignarTurnoComponent, AsignarAlimentosComponent, AddHoraTurnoExtraComponent, AddAlimentoExtraComponent,
-    EliminarExtraComponent, AddTurnoComponent, AddAlimentoComponent]
+    EliminarExtraComponent, AddTurnoComponent, AddAlimentoComponent, PagarComponent]
 })
 export class AppModule {
 }

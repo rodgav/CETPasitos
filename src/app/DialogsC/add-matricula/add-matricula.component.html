@@ -5,10 +5,11 @@
 <form [formGroup]="form" (ngSubmit)="AgregarMatricula()">
   <mat-dialog-content>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <mat-form-field class="example-full-width">
           <label>
             <input matInput type="number" formControlName="codigo" placeholder="Codigo o DNI Estudiante"
+                   autocomplete="nope"
                    (keyup)="Controlar($event.target.value)">
           </label>
           <mat-error *ngIf="isFieldInvalid('codigo')">
@@ -36,7 +37,8 @@
 
         <mat-form-field class="example-full-width">
           <label>
-            <input matInput [matDatepicker]="picker" formControlName="fechaini" placeholder="Fecha Inic.">
+            <input matInput [matDatepicker]="picker" formControlName="fechaini" placeholder="Fecha Inic."
+                   autocomplete="nope" (dateChange)="ObtenerDias($event)">
           </label>
           <mat-error *ngIf="isFieldInvalid('fechaini')">
             Escoja la fecha de inicio
@@ -45,7 +47,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <mat-form-field>
           <mat-select placeholder="Turno" formControlName="turno" (selectionChange)="Selecionar($event)">
             <mat-option *ngFor="let item of turnos" [value]="item"
@@ -56,7 +58,6 @@
             </mat-error>
           </mat-select>
         </mat-form-field>
-
         <mat-form-field>
           <mat-select placeholder="Año" formControlName="anio">
             <mat-option *ngFor="let item of anios" [value]="item.id"> {{item.nombre}}
@@ -101,24 +102,53 @@
 
         <mat-form-field class="example-full-width">
           <label>
-            <input matInput type="text" formControlName="boleta" placeholder="Boleta">
+            <input matInput type="text" formControlName="boleta" placeholder="Boleta" autocomplete="nope">
           </label>
           <mat-error *ngIf="isFieldInvalid('boleta')">
             Ingrese el numero de boleta
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <label>
-            <input matInput type="text" formControlName="total" placeholder="Total">
-          </label>
-        </mat-form-field>
-
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <mat-form-field class="example-full-width">
           <label>
             <input matInput type="text" formControlName="totalma" placeholder="Total Matricula">
+          </label>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <label>
+            <input matInput type="text" formControlName="subtotalme" placeholder="Sub-Total Mensualidad">
+          </label>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <label>
+            <input matInput type="text" formControlName="subtotala" placeholder="Sub-Total Almuerzo">
+          </label>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <label>
+            <input matInput type="text" formControlName="subtotalr" placeholder="Sub-Total Refrigerio">
+          </label>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <label>
+            <input matInput type="number" formControlName="descuento" placeholder="Descuento"
+                   autocomplete="nope" (keyup)="Descontar($event)">
+          </label>
+          <mat-error *ngIf="isFieldInvalid('descuento')">
+            Ingrese el valor a descontar
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-3">
+        <mat-form-field class="example-full-width">
+          <label>
+            <input matInput type="text" formControlName="diasrestantes" placeholder="Dias Restantes">
           </label>
         </mat-form-field>
 
@@ -142,12 +172,8 @@
 
         <mat-form-field class="example-full-width">
           <label>
-            <input matInput type="number" formControlName="descuento" placeholder="Descuento"
-                   (keyup)="Descontar($event)">
+            <input matInput type="text" formControlName="total" placeholder="Total" autocomplete="nope">
           </label>
-          <mat-error *ngIf="isFieldInvalid('descuento')">
-            Ingrese el valor a descontar
-          </mat-error>
         </mat-form-field>
       </div>
     </div>

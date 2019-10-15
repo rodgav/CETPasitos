@@ -10,14 +10,14 @@
       <form [formGroup]="form" (ngSubmit)="LoginUser()">
         <h1> Login</h1>
         <mat-form-field class="full-width-input">
-          <input matInput type="number" placeholder="Usuario" formControlName="usuario" autocomplete="usuario" #usuariol>
+          <input matInput type="number" placeholder="Usuario" formControlName="usuario" autocomplete="off" #usuariol>
           <mat-error *ngIf="isFieldInvalid('usuario')">
             Ingrese su DNI
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width-input">
           <input matInput type="password" placeholder="Contraseña" formControlName="password"
-                 autocomplete="new-password">
+                 autocomplete="off">
           <mat-error *ngIf="isFieldInvalid('password')">
             Ingrese su contraseña
           </mat-error>

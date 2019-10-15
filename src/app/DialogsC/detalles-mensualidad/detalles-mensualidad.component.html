@@ -170,17 +170,10 @@
         <span fxFlex></span>
         <h5>SUB TOTAL EXTRAS: {{subtotalextras}}</h5>
       </div>
-      <br>
-      <mat-form-field class="example-full-width">
-        <label>
-          <input matInput type="number" formControlName="descuentoextras" placeholder="Descuento extras"
-                 (keyup)="DescontarExtras($event.target.value)">
-        </label>
-        <mat-error *ngIf="isFieldInvalid1('descuentoextras')">
-          Ingrese el valor a descontar
-        </mat-error>
-      </mat-form-field>
-      <br>
+      <div>
+        <span fxFlex></span>
+        <h5>DESCUENTO: {{descuentoextras}}</h5>
+      </div>
       <div>
         <span fxFlex></span>
         <h5>TOTAL EXTRAS: {{totalextras}}</h5>
@@ -309,32 +302,112 @@
         <span fxFlex></span>
         <h5>SUB TOTAL MENSUALIDADES: {{subtotalmensualidades}}</h5>
       </div>
-      <br>
-      <mat-form-field class="example-full-width">
-        <label>
-          <input matInput type="number" formControlName="descuentomensualidad" placeholder="Descuento mensualidad"
-                 (keyup)="DescontarMensualidades($event.target.value)">
-        </label>
-        <mat-error *ngIf="isFieldInvalid1('descuentomensualidad')">
-          Ingrese el valor a descontar
-        </mat-error>
-      </mat-form-field>
-      <br>
+      <div>
+        <span fxFlex></span>
+        <h5>DESCUENTO: {{descuentomensualidad}}</h5>
+      </div>
       <div>
         <span fxFlex></span>
         <h5>TOTAL MENSUALIDADES: {{totalmensualidades}}</h5>
       </div>
       <br>
-      <mat-form-field class="example-full-width">
-        <label>
-          <input matInput type="number" formControlName="montoapagar" placeholder="Monto a pagar"
-                 (keyup)="CalcularDeuda($event.target.value)">
-        </label>
-      </mat-form-field>
+      <H5>DEUDAS</H5>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            DEUDAS MESES ANTERIORES
+          </mat-panel-title>
+          <mat-panel-description>
+            {{TotalDeudaAnter}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="mat-elevation-z8 turnosextra-table">
+
+          <mat-table [dataSource]="dataSourced">
+
+            <ng-container matColumnDef="fecha">
+              <mat-header-cell *matHeaderCellDef>FECHA</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="mobile-label">FECHA</span>
+                {{row.fecha}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="nombre">
+              <mat-header-cell *matHeaderCellDef>NOMBRE</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="mobile-label">NOMBRE</span>
+                {{row.nombre}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+              <mat-header-cell *matHeaderCellDef>TOTAL</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="mobile-label">TOTAL</span>
+                {{row.total}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="descuento">
+              <mat-header-cell *matHeaderCellDef>DESCUENTO</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="mobile-label">DESCUENTO</span>
+                {{row.descuento}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="pagado">
+              <mat-header-cell *matHeaderCellDef>PAGADO</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="mobile-label">PAGADO</span>
+                {{row.pagado}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="deuda">
+              <mat-header-cell *matHeaderCellDef>DEUDA</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="mobile-label">DEUDA</span>
+                {{row.deuda}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnasd"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnasd;"></mat-row>
+          </mat-table>
+        </div>
+      </mat-expansion-panel>
       <br>
       <div>
         <span fxFlex></span>
-        <h3>TOTAL: {{total}}</h3>
+        <h5>TOTAL DEUDAS: {{TotalDeudaAnter}}</h5>
+      </div>
+      <br>
+      <div>
+        <span fxFlex></span>
+        <mat-form-field class="example-full-width">
+          <label>
+            <input matInput type="number" formControlName="descuento" placeholder="Descuento"
+                   autocomplete="nope" (keyup.enter)="CalcularDescuento($event.target.value)">
+          </label>
+        </mat-form-field>
+      </div>
+      <div>
+        <span fxFlex></span>
+        <mat-form-field class="example-full-width">
+          <label>
+            <input matInput type="number" formControlName="montoapagar" placeholder="Monto a pagar"
+                   autocomplete="nope" (keyup.enter)="CalcularDeuda($event.target.value)">
+          </label>
+        </mat-form-field>
+      </div>
+      <br>
+      <div>
+        <span fxFlex></span>
+        <h3>TOTAL: {{subtotal}}</h3>
+      </div>
+      <div>
+        <span fxFlex></span>
+        <h3>DESCUENTO: {{descuento}}</h3>
+      </div>
+      <div>
+        <span fxFlex></span>
+        <h3>TOTAL A PAGAR: {{total}}</h3>
       </div>
       <div>
         <span fxFlex></span>

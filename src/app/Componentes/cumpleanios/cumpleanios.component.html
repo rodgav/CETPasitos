@@ -5,6 +5,13 @@
   </div>
   <mat-divider [inset]="true"></mat-divider>
   <div class="divbar">
+    <mat-form-field>
+      <mat-select placeholder="Meses" formControlName="idmes" (selectionChange)="SeleccionarMeses($event)">
+        <mat-option *ngFor="let item of meses" [value]="item.i"> {{item.n}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-divider [vertical]="true"></mat-divider>
     <mat-form-field fxFlex="40%">
       <label>
         <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
@@ -52,6 +59,13 @@
       <mat-cell *matCellDef="let row">
         <span class="mobile-label">CELULAR</span>
         {{row.celular}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="celular">
+      <mat-header-cell *matHeaderCellDef>CELULAR APODERADO</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span class="mobile-label">CELULAR APODERADO</span>
+        {{row.celularf}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>

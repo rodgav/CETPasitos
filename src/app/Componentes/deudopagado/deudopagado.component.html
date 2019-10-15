@@ -7,6 +7,13 @@
   <div class="divbar">
     <form [formGroup]="form">
       <mat-form-field>
+        <mat-select placeholder="Mensualidades" formControlName="anio" (selectionChange)="SeleccionarMensu($event)">
+          <mat-option *ngFor="let item of tipomensu" [value]="item.id"> {{item.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-divider [vertical]="true"></mat-divider>
+      <mat-form-field>
         <mat-select placeholder="Año" formControlName="anio" (selectionChange)="SeleccionarAnios($event)">
           <mat-option *ngFor="let item of anios" [value]="item.nombre"> {{item.nombre}}
           </mat-option>
@@ -69,13 +76,6 @@
           {{row.fecha}}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="mes">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>MES</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <span class="mobile-label">MES</span>
-          {{row.mes}}</mat-cell>
-      </ng-container>
-
       <ng-container matColumnDef="totalm">
         <mat-header-cell *matHeaderCellDef mat-sort-header>{{totalm}}</mat-header-cell>
         <mat-cell *matCellDef="let row">
@@ -102,6 +102,30 @@
         <mat-cell *matCellDef="let row">
           <span class="mobile-label">TOTAL</span>
           {{row.total}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="pagado">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>PAGADO</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">PAGADO</span>
+          {{row.pagado}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="deuda">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>DEUDA</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">DEUDA</span>
+          {{row.deuda}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="detalles">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>DETALLES</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">DETALLES</span>
+          <button mat-icon-button color="primary" (click)="Detalles(row.idmatri,row.estado,row.idest)">
+            <i class="fa fa-info-circle"></i>
+          </button>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>

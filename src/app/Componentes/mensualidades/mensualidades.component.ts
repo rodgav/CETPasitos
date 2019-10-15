@@ -33,47 +33,40 @@ export class MensualidadesComponent implements OnInit {
   meses = [{i: '01', n: 'ENERO'}, {i: '02', n: 'FEBRERO'}, {i: '03', n: 'MARZO'}, {i: '04', n: 'ABRIL'}, {i: '05', n: 'MAYO'},
     {i: '06', n: 'JUNIO'}, {i: '07', n: 'JULIO'}, {i: '08', n: 'AGOSTO'}, {i: '09', n: 'SETIEMBRE'}, {i: '10', n: 'OCTUBRE'},
     {i: '11', n: 'NOVIEMBRE'}, {i: '12', n: 'DICIEMBRE'}];
-  columnas = ['usuario', 'estado', 'idmatri', 'estudiante', 'fecha'
-    , 'mes', 'totalm', 'totala', 'desc', 'total', 'detalles'];
+  columnas = ['usuario', 'mensualidad', 'estado', 'idmatri', 'estudiante', 'fecha'
+    , 'totalm', 'totala', 'desc', 'total', 'detalles', 'pagado', 'deuda'];
   mensualidades: Mensualidades[];
   keydata = 'mensualidades';
+  keydatam = 'tipomensu';
   keyerro = 'error';
   visible: boolean;
   anios: Tipos[];
+  tipomensu: Tipos[];
   keydataa = 'anios';
   anio0 = '';
   mes0 = '';
-  tipo: string;
+  tipomensu0 = '';
   titulo: any;
   totalm: any;
   totala: any;
 
   constructor(private fb: FormBuilder,
-              private rutaActiva: ActivatedRoute,
               private conexion: ConexionService,
               private router: Router,
               private dialog: MatDialog,
               private usuarioservicio: UsuarioService) {
-    this.tipo = this.rutaActiva.snapshot.params.tipo;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit() {
+    this.titulo = 'MENSUALIDADES';
     this.form = this.fb.group({
       idmes: [''],
       anio: ['']
     });
-    if (this.tipo === '1') {
-      this.titulo = 'MENSUALIDADES';
-      this.totalm = 'TOTAL MENS.';
-      this.totala = 'TOTAL ALIM.';
-    } else {
-      this.titulo = 'EXTRAS';
-      this.totalm = 'TURNOS / HORAS';
-      this.totala = 'ALIMENTOS';
-    }
-    this.LlenarMensualidades(this.anio0, this.mes0);
+    this.LlenarMensualidades(this.anio0, this.mes0, '');
     this.LlenarAnios();
+    this.LLenarTipoMensu();
   }
 
   public doFilter = (value: string) => {
@@ -82,12 +75,26 @@ export class MensualidadesComponent implements OnInit {
 
   SeleccionarAnios($event: MatSelectChange) {
     this.anio0 = $event.value;
-    this.LlenarMensualidades(this.anio0, this.mes0);
+    this.LlenarMensualidades(this.anio0, this.mes0, '');
   }
 
   SeleccionarMeses($event: MatSelectChange) {
     this.mes0 = $event.value;
-    this.LlenarMensualidades(this.anio0, this.mes0);
+    this.LlenarMensualidades(this.anio0, this.mes0, '');
+  }
+
+  SeleccionarMensu($event: MatSelectChange) {
+    this.tipomensu0 = $event.value;
+    if (this.tipomensu0 === '1') {
+      this.titulo = 'MENSUALIDADES';
+      this.totalm = 'TOTAL MENS.';
+      this.totala = 'TOTAL ALIM.';
+    } else {
+      this.titulo = 'EXTRAS';
+      this.totalm = 'TURNOS / HORAS';
+      this.totala = 'ALIMENTOS';
+    }
+    this.LlenarMensualidades(this.anio0, this.mes0, this.tipomensu0);
   }
 
   openDialog() {
@@ -101,7 +108,7 @@ export class MensualidadesComponent implements OnInit {
     dialogConfig.hasBackdrop = true;
     const dialogRef = this.dialog.open(DetallesMensualidadComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
-      this.LlenarMensualidades(this.anio0, this.mes0);
+      this.LlenarMensualidades(this.anio0, this.mes0, '');
       alert(result);
       // console.log(result);
     });
@@ -119,13 +126,13 @@ export class MensualidadesComponent implements OnInit {
     dialogConfig.hasBackdrop = true;
     const dialogRef = this.dialog.open(DetallesMensualidadComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
-      this.LlenarMensualidades(this.anio0, this.mes0);
+      this.LlenarMensualidades(this.anio0, this.mes0, '');
       alert(result);
       // console.log(result);
     });
   }
 
-  private LlenarMensualidades(anio0: any, mes0: string) {
+  private LlenarMensualidades(anio0: any, mes0: string, tipomensu0: string) {
     const formData = new FormData();
     const fecha = formatDate(this.now, 'yyyy-MM-dd', 'en-US', '-0500');
     const anio = formatDate(this.now, 'yyyy', 'en-US', '-0500');
@@ -144,7 +151,7 @@ export class MensualidadesComponent implements OnInit {
     formData.append('aniomes', this.aniomes);
     formData.append('fecha', fecha);
     formData.append('usu', usu);
-    formData.append('tipo', this.tipo);
+    formData.append('tipo', tipomensu0);
     this.mensualidades = null;
     this.conexion.servicio(formData).subscribe(
       mensualidades => {
@@ -166,6 +173,19 @@ export class MensualidadesComponent implements OnInit {
           this.anios = anios[this.keydataa];
           // console.log(key);
           // console.log(usuario[key]);
+        });
+      }
+    );
+  }
+
+
+  private LLenarTipoMensu() {
+    const formData = new FormData();
+    formData.append('accion', this.keydatam);
+    this.conexion.servicio(formData).subscribe(
+      tipomensu => {
+        Object.keys(tipomensu).map(() => {
+          this.tipomensu = tipomensu[this.keydatam];
         });
       }
     );
